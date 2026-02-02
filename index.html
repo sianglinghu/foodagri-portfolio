@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食刻食農 | 胡湘苓 | 食農教育講師與設計師</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+            /* --- 電腦版大小雙星鼠標設定 --- */
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23C68E5F'><path d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/><circle cx='24' cy='8' r='2'/><path d='M26 18L27 21L30 22L27 23L26 26L25 23L22 22L25 21L26 18Z' opacity='0.7'/></svg>") 12 12, auto;
+        }
+
+        a, button, [role="button"], input, select, textarea, .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .shadow-white-bold {
+            text-shadow: 0 2px 4px rgba(44, 27, 18, 0.4), 0 4px 12px rgba(44, 27, 18, 0.1);
+        }
+        .shadow-white-thin {
+            text-shadow: 0 1px 2px rgba(44, 27, 18, 0.3);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 40s linear infinite;
+        }
+        .pause-animation {
+            animation-play-state: paused !important;
+        }
+
+        .transition-theme {
+            transition: background-color 0.7s ease, color 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+        }
+
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F6F0;
+        }
+        .dark-mode ::-webkit-scrollbar-track {
+            background: #2C1B12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C68E5F;
+            border-radius: 10px;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        /* --- 藝廊小卡互動修正（半透明漸層遮罩） --- */
+        .gallery-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(45, 27, 16, 0.9) 0%, rgba(45, 27, 16, 0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 15;
+        }
+
+        .gallery-card-content {
+            opacity: 0;
+            transform: translateY(1.5rem);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+        }
+        
+        /* 電腦版：維持 Hover 顯示遮罩與文字 */
+        @media (min-width: 1024px) {
+            .group\/card:hover .gallery-card-overlay {
+                opacity: 1;
+            }
+            .group\/card:hover .gallery-card-content {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 手機版：由 JS 控制的 .is-visible 類別觸發 */
+        @media (max-width: 1023px) {
+            .group\/card.is-visible .gallery-card-overlay {
+                opacity: 1;
+            }
+            .group\/card.is-visible .gallery-card-content {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #eyecare-bar {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        
+        .eyecare-hidden {
+            transform: translateY(-100%) !important;
+        }
+        
+        #navbar {
+            top: 27px;
+            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.7s ease, border-color 0.7s ease;
+        }
+
+        .dark-mode {
+            background-color: #2C1B12 !important;
+            color: #EAD7C3 !important;
+        }
+
+        .dark-mode #navbar {
+            background-color: rgba(44, 27, 18, 0.95) !important;
+            border-color: #3D2B1F !important;
+        }
+
+        .dark-mode #hero-title {
+            color: #F9F6F0 !important;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .section-bg {
+            background-color: rgba(61, 43, 31, 0.5) !important;
+        }
+
+        .dark-mode .theme-card {
+            background-color: #3D2B1F !important;
+            border-color: #4A3728 !important;
+            color: #EAD7C3 !important;
+        }
+
+        .dark-mode .theme-card-sub {
+            background-color: rgba(74, 55, 40, 0.5) !important;
+            border-color: #4A3728 !important;
+            color: #EAD7C3 !important;
+        }
+
+        .dark-mode .theme-bento-card {
+            background-color: #3D2B1F !important;
+            border-color: #4A3728 !important;
+        }
+
+        .dark-mode .bento-title {
+            color: #F9F6F0 !important;
+        }
+
+        .dark-mode .bento-desc {
+            color: #EAD7C3;
+            opacity: 0.8;
+        }
+
+        .dark-mode .theme-btn-secondary {
+            background-color: rgba(74, 55, 40, 0.5) !important;
+            border-color: #4A3728 !important;
+            color: #EAD7C3 !important;
+        }
+
+        .dark-mode footer {
+            border-color: #3D2B1F !important;
+        }
+
+        .dark-mode #eyecare-bar {
+            background-color: #3D2B1F !important;
+            color: #C68E5F !important;
+        }
+
+        .dark-mode #eyecare-bar button, .dark-mode #eyecare-bar div {
+            color: #C68E5F !important;
+        }
+        
+        .dark-mode #eyecare-bar .bg-white\/20 {
+            background-color: rgba(198, 142, 95, 0.2) !important;
+        }
+
+        .dark-mode #mobile-menu {
+            background-color: #2C1B12 !important;
+            color: #EAD7C3 !important;
+        }
+
+        @media (max-width: 767px) {
+            .hero-image-mask {
+                mask-image: radial-gradient(120% 100% at 50% 0%, black 75%, transparent 100%);
+                -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, black 75%, transparent 100%);
+                overflow: hidden;
+            }
+        }
+
+        .expertise-modal {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .expertise-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+         /* 💡 原理學習：升級版聯絡彈窗 CSS */
+        .glass-modal-overlay {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.4);
+            display: none; /* 初始隱藏 */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .glass-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .glass-modal-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .dark-mode .glass-modal-card {
+            background: rgba(45, 36, 29, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* 複製成功的小氣泡動畫 */
+        @keyframes toastUp {
+            0% { transform: translate(-50%, 20px); opacity: 0; }
+            20% { transform: translate(-50%, 0); opacity: 1; }
+            80% { transform: translate(-50%, 0); opacity: 1; }
+            100% { transform: translate(-50%, -20px); opacity: 0; }
+        }
+        .copy-toast {
+            animation: toastUp 2s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#F9F6F0] text-[#4A3728] transition-theme" id="body-root">
+
+    <!-- 1. 智慧護眼條 -->
+    <div id="eyecare-bar" class="fixed top-0 w-full z-[120] text-[10px] px-4 py-1.5 flex justify-between items-center bg-[#C68E5F] text-white">
+        <div class="flex items-center gap-1 font-medium tracking-widest shadow-white-thin">
+            <i data-lucide="shield-check" class="w-3 h-3"></i>
+            <span class="uppercase" id="eyecare-status">Eye-Care Mode Active</span>
+        </div>
+        <div class="flex gap-4 items-center font-bold">
+            <button onclick="toggleAuto()" id="auto-btn" class="hover:opacity-70 transition shadow-white-thin">AUTO</button>
+            <div class="w-[1px] h-3 bg-white/20"></div>
+            <button onclick="toggleDarkMode()" class="hover:scale-110 transition shadow-white-thin">
+                <i data-lucide="moon" id="theme-icon" class="w-3 h-3"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. 導航欄 -->
+    <nav id="navbar" class="fixed w-full z-[110] transition-theme bg-[#F9F6F0]/90 border-b border-[#EAE2D5] glass-nav">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C68E5F] text-white shadow-white-bold">
+                    <img  class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C68E5F] text-white shadow-white-bold" src="https://lh3.googleusercontent.com/d/1njtRZf4I47sqjqiGRbRLbfPiFXf_XhDp" 
+     alt="食刻食農LOGO" 
+     class="w-full h-full object-cover">
+                </div>
+               <div class="flex flex-col gap-1"> <!-- 加入 gap-1 來拉開距離 -->
+    <span class="text-lg font-bold tracking-tighter leading-none">食刻食農｜胡湘苓</span>
+    <span class="text-[9px] font-light tracking-[0.3em] opacity-60 uppercase">Food and Agri - Education</span>
+</div>
+            </a>
+            
+            <div class="hidden md:flex space-x-10">
+                <a href="#about" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">關於湘苓</a>
+                <a href="#background" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">經歷養成</a>
+                <a href="#expertise" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">專業菜單</a>
+                <a href="#portfolio" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">作品藝廊</a>
+                <a href="#contact" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">預約特餐</a>
+            </div>
+
+            <button class="md:hidden p-2 relative z-[120]" onclick="toggleMenu()">
+                <i data-lucide="menu" id="menu-icon-trigger"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 3. Mobile Menu & Overlay -->
+    <div id="menu-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[105] opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
+    
+    <div id="mobile-menu" class="fixed inset-0 top-0 left-0 w-full h-full bg-[#F9F6F0] z-[108] p-10 pt-32 flex flex-col space-y-6 transform translate-x-full transition-transform duration-500 ease-in-out">
+        <a href="#about" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">關於湘苓</a>
+        <a href="#background" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">經歷養成</a>
+        <a href="#expertise" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">專業菜單</a>
+        <a href="#portfolio" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">作品藝廊</a>
+        <a href="#contact" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">預約特餐</a>
+        
+        <div class="pt-10 border-t border-[#EAE2D5]">
+            <p class="text-[10px] font-bold tracking-widest opacity-40 uppercase">Let's Connect</p>
+            <div class="flex gap-4 mt-4">
+                <a href="https://www.facebook.com/ftime.fae" target="_blank" class="hover:text-[#C68E5F] transition-colors">
+                    <i data-lucide="facebook" class="w-6 h-6 opacity-60"></i>
+                </a>
+                <a href="https://www.instagram.com/ftime.fae" target="_blank" class="hover:text-[#C68E5F] transition-colors">
+                    <i data-lucide="instagram" class="w-6 h-6 opacity-60"></i>
+                </a>
+               <!-- 💡 原理學習：行動版底部選單也同步改為彈窗 -->
+                <button onclick="openContactPopup()"><i data-lucide="mail" class="w-6 h-6 opacity-60"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Hero Section -->
+    <section id="about" class="pt-20 md:pt-40 pb-12 md:pb-20 px-0 md:px-6 relative overflow-hidden">
+        <div class="absolute top-40 -left-20 w-80 h-80 bg-[#C68E5F]/5 rounded-full blur-3xl"></div>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 md:gap-16 items-center relative z-10">
+            <div class="flex justify-center md:justify-end order-1 md:order-2">
+                <div class="relative w-full md:max-w-none">
+                    <div class="hidden md:block absolute -inset-6 rounded-[3rem] border border-[#C68E5F]/20 animate-pulse"></div>
+                    <div class="hero-image-mask relative aspect-[4/3] md:aspect-square w-full md:w-[450px] md:h-[450px] md:rounded-[3rem] overflow-hidden shadow-2xl md:rotate-3 md:hover:rotate-0 transition-transform duration-700 bg-[#EAD7C3]">
+                       <img src="https://lh3.googleusercontent.com/d/1vvQUFI259AcObMwmL5Zswd6bkGIboGDg" 
+     alt="胡湘苓商業視覺照片側寫修圖" 
+     class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <div class="text-center md:text-left order-2 md:order-1 px-6 md:px-0">
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-[#C68E5F]"></i>
+                    <span class="text-[11px] font-bold tracking-[0.3em] uppercase opacity-60">Food-Agri Communicator</span>
+                </div>
+                <h1 class="text-4xl md:text-7xl font-black mb-4 md:mb-8 leading-[1.2] md:leading-[1.1] text-[#3D2B1F] transition-theme" id="hero-title">
+                    我是湘苓！<br />
+                    <span class="text-xl md:text-2xl text-[#C68E5F] mt-2 block md:inline">也可以叫我 April / Apple <i data-lucide="apple" class="w-5 h-5 inline-block mb-1"></i> ～</span>
+                </h1>
+                <p class="text-base md:text-lg mb-6 md:mb-12 max-w-lg mx-auto md:mx-0 leading-relaxed opacity-80 px-4 md:px-0">
+                    在中興動科的科學基底上，我用設計與教育作為轉譯器，將硬核的畜產知識，烘焙成每個人都能消化的暖心內容。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact" class="px-10 py-4 bg-[#C68E5F] text-white rounded-2xl font-bold hover:shadow-2xl transition-all text-center text-sm hover:-translate-y-1 shadow-white-bold">
+                        聯繫｜開始合作提案
+                    </a>
+                    <a href="#portfolio" class="px-10 py-4 rounded-2xl font-bold border border-[#EAE2D5] bg-white text-[#4A3728] shadow-sm hover:bg-gray-50 transition-all text-center text-sm theme-btn-secondary">
+                        探索｜過往食農設計
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Background & Identity -->
+    <section id="background" class="py-12 md:py-20 px-4 md:px-6 bg-[#EAE2D5]/30 transition-theme section-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-8 md:mb-12 text-center md:text-left">
+                <span class="text-[#C68E5F] text-[10px] md:text-[11px] font-black tracking-[0.3em] uppercase">Journey & Identity</span>
+                <h2 class="text-2xl md:text-4xl font-black mt-1 md:mt-2 mb-2 italic tracking-tighter uppercase leading-tight">讓我們了解更多餐盤裡的食物！</h2>
+                <p class="text-[9px] md:text-xs opacity-50 tracking-widest uppercase">しょくじ ‧ しょく育 | 食卓の中身をもっと知りましょう!</p>
+            </div>
+            <div class="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
+                <div class="md:col-span-5">
+                    <div class="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem] shadow-sm border border-[#EAE2D5] transition-theme theme-card">
+                        <div class="flex items-center gap-3 mb-6 md:mb-8">
+                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-[#8A9A5B]/10 flex items-center justify-center text-[#8A9A5B]">
+                                <i data-lucide="graduation-cap" class="w-5 h-5 md:w-6 md:h-6"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold tracking-tight">背景與身分</h3>
+                        </div>
+                        <ul class="space-y-6 md:space-y-8">
+                            <li class="flex flex-col">
+                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Education</span>
+                                <span class="font-bold text-base md:text-lg">國立中興大學 動物科學系 學士</span>
+                            </li>
+                            <li class="flex flex-col">
+                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Current Role</span>
+                                <span class="font-bold italic text-xl md:text-2xl block">食刻食農 － 創辦人</span>
+                            </li>
+                            <li class="flex flex-col">
+                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Core Affiliations</span>
+                                <div class="grid grid-cols-1 gap-2 md:gap-3 mt-2">
+                                    <div class="flex items-start gap-2 text-xs md:text-base">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
+                                        <span>台灣兒童食育協會 － 食育講師</span>
+                                    </div>
+                                    <div class="flex items-start gap-2 text-xs md:text-base">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
+                                        <span>食通信台灣事務局 － 食通信推進員</span>
+                                    </div>
+                                    <div class="flex items-start gap-2 text-xs md:text-base">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
+                                        <span>eFOOOD 惜食教育 － 師培講師/專案經理</span>
+                                    </div>
+                                    <div class="flex items-start gap-2 text-xs md:text-base">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
+                                        <span>大豆產業策略聯盟 － 台灣大豆種子講師</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:col-span-7 space-y-4">
+                    <div class="flex items-center gap-3 mb-2 px-2 md:px-0">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-[#C68E5F]/10 flex items-center justify-center text-[#C68E5F]">
+                            <i data-lucide="briefcase" class="w-5 h-5 md:w-6 md:h-6"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold tracking-tight">專長與歷練</h3>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 md:gap-4">
+                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
+                            <div>
+                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">《咕咕大探險》</h4>
+                                <p class="text-[11px] md:text-sm opacity-70">主編及美編插畫</p>
+                            </div>
+                            <i data-lucide="book-open" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
+                            <div>
+                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">艾普莉絲設計</h4>
+                                <p class="text-[11px] md:text-sm opacity-70">平面與插畫設計</p>
+                            </div>
+                            <i data-lucide="pen-tool" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
+                            <div>
+                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">優豬 / 優雞可尋</h4>
+                                <p class="text-[11px] md:text-sm opacity-70">知識轉譯編輯</p>
+                            </div>
+                            <i data-lucide="database" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Expertise Section -->
+    <section id="expertise" class="py-12 md:py-20 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-10 md:mb-16">
+            <h2 class="text-3xl font-black mb-3 italic tracking-tighter uppercase">Skills Bento.</h2>
+            <div class="w-12 h-1 bg-[#C68E5F] mx-auto rounded-full"></div>
+        </div>
+
+        <div class="hidden md:grid grid-cols-3 gap-10">
+            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
+                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#C68E5F] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
+                    <i data-lucide="microscope"></i>
+                </div>
+                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">主食：畜產轉譯</h3>
+                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">中興動科背景，將嚴謹的科學數據，轉化為大眾餐桌上聽得懂、有溫度的語言。</p>
+                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Livestock Science Translation <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </div>
+            </a>
+            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
+                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#8A9A5B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
+                    <i data-lucide="mic-2"></i>
+                </div>
+                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">主菜：食農講師</h3>
+                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">致力於生命教育，在全台各地播下食農種子，連結消費者與生產者的斷層。</p>
+                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Food and Agriculture Educator <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </div>
+            </a>
+            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
+                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#E29578] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
+                    <i data-lucide="palette"></i>
+                </div>
+                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">配菜：視覺美學</h3>
+                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">擅長將繁複資訊圖像化，用細膩的手繪感插畫，為農產品牌注入獨特靈魂。</p>
+                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Visual Storytelling <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="md:hidden flex justify-center items-center gap-8 py-4">
+            <button onclick="openExpertiseModal(0)" class="flex flex-col items-center gap-2 group">
+                <div class="w-16 h-16 rounded-2xl bg-[#C68E5F] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
+                    <i data-lucide="microscope" class="w-8 h-8"></i>
+                </div>
+                <span class="text-[10px] font-bold opacity-60">畜產轉譯</span>
+            </button>
+            <button onclick="openExpertiseModal(1)" class="flex flex-col items-center gap-2 group">
+                <div class="w-16 h-16 rounded-2xl bg-[#8A9A5B] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
+                    <i data-lucide="mic-2" class="w-8 h-8"></i>
+                </div>
+                <span class="text-[10px] font-bold opacity-60">食農講師</span>
+            </button>
+            <button onclick="openExpertiseModal(2)" class="flex flex-col items-center gap-2 group">
+                <div class="w-16 h-16 rounded-2xl bg-[#E29578] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
+                    <i data-lucide="palette" class="w-8 h-8"></i>
+                </div>
+                <span class="text-[10px] font-bold opacity-60">視覺美學</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Expertise Modal -->
+    <div id="expertise-modal" class="md:hidden fixed inset-0 z-[200] flex items-center justify-center p-6 expertise-modal">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeExpertiseModal()"></div>
+        <div id="modal-content" class="relative w-full max-w-sm p-8 rounded-[2.5rem] bg-white border border-[#F0EAE0] shadow-2xl transition-theme theme-bento-card">
+            <button onclick="closeExpertiseModal()" class="absolute top-6 right-6 opacity-40 hover:opacity-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div id="modal-icon-box" class="mb-6 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg text-white shadow-white-bold"></div>
+            <h3 id="modal-title" class="text-xl font-black mb-4 tracking-tight bento-title"></h3>
+            <p id="modal-desc" class="leading-relaxed text-sm opacity-80 mb-6 bento-desc"></p>
+            <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F]">
+                <span id="modal-sub"></span> <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Portfolio Section -->
+    <section id="portfolio" class="py-16 md:py-24 overflow-hidden bg-[#2D1B10] transition-theme">
+        <div class="max-w-6xl mx-auto px-6 mb-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 text-center md:text-left">
+            <div>
+                <h2 class="text-3xl font-black text-[#F9F6F0] mb-2 italic tracking-tighter uppercase shadow-white-bold">Portfolio Showcase.</h2>
+                <p class="text-[#C68E5F] text-[11px] tracking-[0.3em] font-bold uppercase">滾動中的食農饗宴</p>
+            </div>
+            <button onclick="toggleMarquee()" class="flex items-center gap-3 text-[10px] font-bold text-white/70 border border-white/20 px-6 py-2 rounded-full hover:bg-white/10 transition">
+                <span id="marquee-btn-text" class="flex items-center gap-2 shadow-white-thin"><i data-lucide="pause" class="w-3 h-3"></i> PAUSE</span>
+            </button>
+        </div>
+        <div class="relative group">
+            <div id="marquee-track" class="animate-marquee flex gap-6 md:gap-8"></div>
+        </div>
+    </section>
+
+    <!-- 8. Contact Section -->
+    <section id="contact" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="max-w-6xl mx-auto">
+            <div id="contact-card" class="rounded-[2.5rem] md:rounded-[4rem] overflow-hidden grid md:grid-cols-2 shadow-2xl bg-white border border-[#F0EAE0] transition-theme theme-card">
+                <div class="p-8 md:p-16 space-y-8 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter uppercase">Get in Touch.</h2>
+                    <p class="text-base md:text-lg opacity-80 leading-relaxed px-2 md:px-0">
+                        正在尋找能將科學知識與視覺傳達完美結合轉譯的夥伴嗎？<br class="hidden md:block"/>
+                        我隨時準備好為您的食農專案注入新的生命力。
+                    </p>
+                    <div class="space-y-4">
+                        <!-- 💡 原理學習：移除原本的 mailto 連結，改為觸發彈窗的 Button -->
+                        <button onclick="openContactPopup()" class="w-full text-left flex items-center gap-4 p-5 rounded-3xl bg-[#F9F6F0] border border-[#EAE2D5] theme-card-sub hover:scale-[1.02] transition-transform">
+                            <div class="w-10 h-10 rounded-xl bg-[#C68E5F] text-white flex items-center justify-center shadow-md"><i data-lucide="mail"></i></div>
+                            <div>
+                                <div class="text-[9px] font-bold opacity-40 uppercase tracking-widest">Connect via Email</div>
+                                <div class="font-bold text-sm">foodagri.note01@gmail.com</div>
+                            </div>
+                        </button>
+                        <div class="flex gap-4">
+                            <a href="https://www.facebook.com/ftime.fae" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
+                                <i data-lucide="facebook" class="w-4 h-4 md:w-5 md:h-5 text-[#4267B2]"></i>
+                                <span class="text-xs font-bold">Facebook｜食刻食農</span>
+                            </a>
+                            <a href="https://twfooducation.org/" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
+                                <i data-lucide="globe" class="w-4 h-4 md:w-5 md:h-5 text-[#8A9A5B]"></i>
+                                <span class="text-xs font-bold">台灣兒童食育協會</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 md:p-16 flex flex-col justify-center bg-[#C68E5F] text-white">
+                    <div class="mb-8 text-center md:text-left">
+                        <h3 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-70 mb-6 md:mb-8 shadow-white-thin">Service Menu</h3>
+                        <ul class="space-y-5 md:space-y-8">
+                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                                <span class="text-xs opacity-50 font-normal shadow-white-thin">01</span> 食農教育教案開發
+                            </li>
+                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                                <span class="text-xs opacity-50 font-normal shadow-white-thin">02</span> 畜產專業知識轉譯
+                            </li>
+                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                                <span class="text-xs opacity-50 font-normal shadow-white-thin">03</span> 品牌視覺與插畫設計
+                            </li>
+                        </ul>
+                    </div>
+                    <!--之後記得🦾調整立刻邀課合作的連結表單-->
+                    <a href="#" target="_blank" class="w-full py-5 bg-white text-[#C68E5F] rounded-2xl font-black tracking-widest text-center text-sm transition-all shadow-xl hover:scale-[1.02] active:scale-95 block">
+                        立即邀課合作
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- 💡 原理學習：新聯絡彈窗結構 -->
+    <div id="contact-popup" class="fixed inset-0 z-[250] items-center justify-center p-6 glass-modal-overlay">
+        <div class="glass-modal-card w-full max-w-sm p-8 rounded-[2.5rem] relative text-center">
+            <button onclick="closeContactPopup()" class="absolute top-6 right-6 opacity-40 hover:opacity-100"><i data-lucide="x"></i></button>
+            
+            <div class="w-16 h-16 bg-[#C68E5F] text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <i data-lucide="mail" class="w-8 h-8"></i>
+            </div>
+            
+            <h3 class="text-2xl font-black italic tracking-tighter uppercase mb-2">聯繫合作</h3>
+            <p class="text-sm opacity-60 mb-8">點擊下方 Email 自動複製地址</p>
+            
+            <!-- 複製區塊 -->
+            <div onclick="copyEmailToClipboard()" class="group relative cursor-pointer bg-white/50 dark:bg-white/10 p-5 rounded-2xl border border-[#EAE2D5] dark:border-white/10 hover:border-[#C68E5F] transition-all mb-4">
+                <span id="email-val" class="text-sm font-bold text-[#C68E5F]">foodagri.note01@gmail.com</span>
+                <div class="text-[9px] font-bold opacity-0 group-hover:opacity-100 transition-opacity mt-1 uppercase tracking-widest">點擊複製</div>
+            </div>
+            
+            <!-- 下載按鈕 -->
+            <button onclick="downloadContactVCF()" class="w-full py-4 bg-[#4A3728] text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:opacity-90 transition">
+                <i data-lucide="user-plus" class="w-4 h-4"></i> 儲存至通訊錄
+            </button>
+        </div>
+    </div>
+
+    <!-- 💡 原理學習：複製成功提示容器 -->
+    <div id="toast-container" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[300]"></div>
+
+    <!-- 9. Footer -->
+    <footer class="py-12 border-t border-[#F0EAE0] px-6 text-center transition-theme">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-8 flex flex-col items-center">
+                <div class="w-10 h-10 rounded-xl bg-[#C68E5F]/10 flex items-center justify-center text-[#C68E5F] mb-6">
+                    <i data-lucide="sparkles"></i>
+                </div>
+                <p class="text-sm font-bold tracking-[0.15em] md:tracking-[0.2em] opacity-60 italic max-w-lg mx-auto leading-relaxed px-4">
+                    " 在碎片時間中累積的溫度，最終將匯聚成改變土地的力量。"
+                </p>
+            </div>
+            <div class="pt-8 border-t border-dashed border-[#C68E5F]/20 flex flex-col md:flex-row justify-center items-center gap-6 text-[9px] md:text-[10px] font-bold tracking-[0.3em] opacity-40 uppercase">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="copyright" class="w-3 h-3"></i> 2026 HU HIANG-LING. ALL RIGHTS RESERVED.
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        let darkMode = false;
+        let autoEyeCare = true;
+        let isPaused = false;
+        let isMenuOpen = false;
+
+        let lastScrollY = window.scrollY;
+        const eyecareBar = document.getElementById('eyecare-bar');
+        const navbar = document.getElementById('navbar');
+
+        function getEyecareHeight() {
+            return eyecareBar.offsetHeight || 27;
+        }
+
+        function initNavPosition() {
+            navbar.style.top = getEyecareHeight() + 'px';
+        }
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const eyecareHeight = getEyecareHeight();
+            
+            if (currentScrollY > lastScrollY && currentScrollY > 50) {
+                eyecareBar.classList.add('eyecare-hidden');
+                navbar.style.top = '0px';
+            } else {
+                eyecareBar.classList.remove('eyecare-hidden');
+                navbar.style.top = eyecareHeight + 'px';
+            }
+            lastScrollY = currentScrollY;
+        });
+
+        const expertiseData = [
+            {
+                title: "主食：畜產轉譯",
+                desc: "中興動科背景，將嚴謹的科學數據，轉化為大眾餐桌上聽得懂、有溫度的語言。",
+                sub: "Livestock Science Translation",
+                icon: "microscope",
+                color: "#C68E5F"
+            },
+            {
+                title: "主菜：食農講師",
+                desc: "致力於食農素養教育，在全台各地播下食農種子，連結消費者與生產者的斷層。",
+                sub: "Food and Agriculture Educator",
+                icon: "mic-2",
+                color: "#8A9A5B"
+            },
+            {
+                title: "配菜：視覺美學",
+                desc: "擅長將繁複資訊圖像化，用細膩的手繪感插畫，為農產品牌注入獨特靈魂。",
+                sub: "Visual Storytelling",
+                icon: "palette",
+                color: "#E29578"
+            }
+        ];
+
+        const galleryItems = [
+            { title: "咕咕大探險", cat: "教材設計", img: "https://lh3.googleusercontent.com/d/1KqBjyj_xnJLjgCn0K_P0Un7PhzgGwymO", desc: "一本教學手冊可供全年齡透過簡單閱讀，了解國產雞蛋雞肉從生產到餐桌！【可免費索取咕咕大探險教材資源包】", url: "https://forms.gle/CXpQeto81sWwXLqc9" },
+            { title: "優豬可尋", cat: "知識轉譯", img: "＃", desc: "將複雜的畜牧養殖過程，透過圖文懶人包形式呈獻。", url: "#" },
+            { title: "豆渣循環利用", cat: "食育課程", img: "＃", desc: "一本教學手冊可供全年齡透過簡單閱讀，了解國產雞蛋雞肉從生產到餐桌！【點擊免費索取咕咕大探險教材資源包】", url: "#" },
+            { title: "易福惜食教育簡報", cat: "專案經理", img: "https://lh3.googleusercontent.com/d/1BYV97lOS1R743XBBvce2-HwXrHK835pN", desc: "編輯調整故事脈絡與排版，授權供營養師及老師們，搭配 eFOOOD 惜食教育桌遊「我吃完了」進行惜食教育推廣！", url: "https://www.foodchill.tw/project/imdoneeating" },
+            { title: "農場美學插畫", cat: "視覺設計", img: "＃", desc: "這是一本可供全年齡簡單閱讀了解國產雞蛋雞肉來由的手冊！從生產到餐桌，國小生都能讀大人一定也可以！【點擊索取咕咕大探險教材資源包】", url: "#" },
+            { title: "食通信專刊", cat: "編輯推進", img: "＃", desc: "深入產地採訪生產者，將硬核技術轉化為感人故事。", url: "#" }
+        ];
+
+        /* --- 藝廊渲染與滾動感應修正 --- */
+        function renderGallery() {
+            const track = document.getElementById('marquee-track');
+            const doubleItems = [...galleryItems, ...galleryItems];
+            track.innerHTML = doubleItems.map((item, index) => `
+                <a href="${item.url}" class="group/card gallery-item-trigger relative w-[280px] md:w-[420px] aspect-[4/5] md:aspect-[16/10] rounded-[2.5rem] bg-[#3D2B1F] overflow-hidden flex-shrink-0 cursor-pointer border border-white/5">
+                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110 opacity-70" />
+                    <!-- 半透明漸層遮罩層 -->
+                    <div class="gallery-card-overlay"></div>
+                    <!-- 文字內容層 -->
+                    <div class="gallery-card-content absolute inset-0 flex flex-col justify-end p-8 md:p-10">
+                        <span class="self-start px-3 py-1 rounded-full text-[9px] font-bold bg-[#C68E5F] text-white mb-4 shadow-white-thin">${item.cat}</span>
+                        <h4 class="text-xl md:text-2xl font-bold text-[#F9F6F0] mb-3 shadow-white-bold">${item.title}</h4>
+                        <p class="text-[#EAD7C3]/90 text-xs leading-relaxed line-clamp-3 mb-6 shadow-white-thin">${item.desc}</p>
+                        <div class="flex items-center gap-2 text-[#C68E5F] text-[10px] font-bold tracking-widest shadow-white-thin">EXPLORE CASE <i data-lucide="chevron-right" class="w-3 h-3"></i></div>
+                    </div>
+                </a>
+            `).join('');
+            
+            lucide.createIcons();
+            initIntersectionObserver();
+        }
+
+        /* --- 手機版滾動感應啟動 --- */
+        function initIntersectionObserver() {
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.7 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (window.innerWidth < 1024) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                        } else {
+                            entry.target.classList.remove('is-visible');
+                        }
+                    }
+                });
+            }, options);
+
+            document.querySelectorAll('.gallery-item-trigger').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        renderGallery();
+
+        function toggleMarquee() {
+            isPaused = !isPaused;
+            const track = document.getElementById('marquee-track');
+            const btnText = document.getElementById('marquee-btn-text');
+            if (isPaused) {
+                track.classList.add('pause-animation');
+                btnText.innerHTML = '<i data-lucide="play" class="w-3 h-3"></i> RESUME';
+            } else {
+                track.classList.remove('pause-animation');
+                btnText.innerHTML = '<i data-lucide="pause" class="w-3 h-3"></i> PAUSE';
+            }
+            lucide.createIcons();
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('menu-overlay');
+            const icon = document.getElementById('menu-icon-trigger');
+            const isOpening = menu.classList.contains('translate-x-full');
+            if (isOpening) {
+                menu.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                icon.setAttribute('data-lucide', 'x');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                menu.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                icon.setAttribute('data-lucide', 'menu');
+                document.body.classList.remove('overflow-hidden');
+            }
+            lucide.createIcons();
+        }
+
+        function openExpertiseModal(index) {
+            const data = expertiseData[index];
+            const modal = document.getElementById('expertise-modal');
+            const iconBox = document.getElementById('modal-icon-box');
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-sub').innerText = data.sub;
+            iconBox.style.backgroundColor = data.color;
+            iconBox.innerHTML = `<i data-lucide="${data.icon}" class="w-8 h-8"></i>`;
+            modal.classList.add('active');
+            lucide.createIcons();
+        }
+
+        function closeExpertiseModal() {
+            document.getElementById('expertise-modal').classList.remove('active');
+        }
+
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            autoEyeCare = false;
+            applyTheme();
+        }
+
+        function toggleAuto() {
+            autoEyeCare = !autoEyeCare;
+            if(autoEyeCare) checkAutoTime();
+            updateUI();
+        }
+
+        function checkAutoTime() {
+            if(!autoEyeCare) return;
+            const hour = new Date().getHours();
+            darkMode = (hour >= 18 || hour < 6);
+            applyTheme();
+        }
+
+        function applyTheme() {
+            const root = document.getElementById('body-root');
+            const icon = document.getElementById('theme-icon');
+            if(darkMode) {
+                root.classList.add('dark-mode');
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                root.classList.remove('dark-mode');
+                icon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+            updateUI();
+        }
+
+        function updateUI() {
+            const status = document.getElementById('eyecare-status');
+            const autoBtn = document.getElementById('auto-btn');
+            status.innerText = darkMode ? "Night-Comfort Mode Active" : "Eye-Care Mode Active";
+            autoBtn.style.opacity = autoEyeCare ? "1" : "0.3";
+        }
+
+        // 💡 原理學習：升級版聯絡功能 JS 邏輯
+        const contactPopup = document.getElementById('contact-popup');
+        const emailToCopy = "foodagri.note01@gmail.com";
+
+        // 6. 彈窗顯示控制
+        function openContactPopup() {
+            contactPopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeContactPopup() {
+            contactPopup.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 點擊背景遮罩關閉
+        contactPopup.addEventListener('click', (e) => {
+            if(e.target === contactPopup) closeContactPopup();
+        });
+
+        // 7. 💡 複製 Email 原理：使用暫時性 Input 選取並執行 Copy 指令
+        function copyEmailToClipboard() {
+            const el = document.createElement('textarea');
+            el.value = emailToCopy;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // 觸發提示
+            const toast = document.createElement('div');
+            toast.className = "copy-toast fixed bottom-12 left-1/2 bg-[#4A3728] text-white px-6 py-3 rounded-full shadow-2xl text-[10px] font-bold tracking-widest z-[300]";
+            toast.innerText = "COPIED TO CLIPBOARD";
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        // 8. 💡 下載 VCF 原理：動態生成符合通訊錄規範的 Blob 物件並下載
+        function downloadContactVCF() {
+            // vCard 標準格式字串
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:食刻食農｜胡湘苓
+ORG:食刻食農
+TITLE:創辦人
+EMAIL;TYPE=INTERNET:foodagri.note01@gmail.com
+URL:https://www.facebook.com/ftime.fae
+NOTE:中興動科背景，食農溝通與視覺轉譯設計師。
+END:VCARD`;
+
+            // 1. 將字串封裝成 Blob 二進位物件
+            const blob = new Blob([vCardData], { type: 'text/vcard' });
+            
+            // 2. 建立一個瀏覽器內部的暫時指向 URL
+            const url = window.URL.createObjectURL(blob);
+            
+            // 3. 建立虛擬 A 標籤進行點擊下載
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = "胡湘苓_食刻食農_聯絡資訊.vcf";
+            document.body.appendChild(link);
+            link.click();
+            
+            // 4. 【關鍵點】清理資源：從 DOM 移除並釋放 URL 佔用的記憶體
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }
+
+
+        window.onload = function() {
+            initNavPosition();
+            checkAutoTime();
+        };
+        setInterval(checkAutoTime, 60000);
+    </script>
+</body>
+</html>
