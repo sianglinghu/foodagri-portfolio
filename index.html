@@ -605,58 +605,72 @@
 
     <!-- 8. Contact Section -->
     <section id="contact" class="py-16 md:py-24 px-4 md:px-6">
-        <div class="max-w-6xl mx-auto">
-            <div id="contact-card" class="rounded-[2.5rem] md:rounded-[4rem] overflow-hidden grid md:grid-cols-2 shadow-2xl bg-white border border-[#F0EAE0] transition-theme theme-card">
-                <div class="p-8 md:p-16 space-y-8 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter uppercase">Get in Touch.</h2>
-                    <p class="text-base md:text-lg opacity-80 leading-relaxed px-2 md:px-0">
-                        正在尋找能將科學知識與視覺傳達完美結合轉譯的夥伴嗎？<br class="hidden md:block"/>
-                        我隨時準備好為您的食農專案注入新的生命力。
-                    </p>
-                    <div class="space-y-4">
-                        <!-- 💡 原理學習：移除原本的 mailto 連結，改為觸發彈窗的 Button -->
-                        <button onclick="openContactPopup()" class="w-full text-left flex items-center gap-4 p-5 rounded-3xl bg-[#F9F6F0] border border-[#EAE2D5] theme-card-sub hover:scale-[1.02] transition-transform">
-                            <div class="w-10 h-10 rounded-xl bg-[#C68E5F] text-white flex items-center justify-center shadow-md"><i data-lucide="mail"></i></div>
-                            <div>
-                                <div class="text-[9px] font-bold opacity-40 uppercase tracking-widest">Connect via Email</div>
-                                <div class="font-bold text-sm">foodagri.note01@gmail.com</div>
-                            </div>
-                        </button>
-                        <div class="flex gap-4">
-                            <a href="https://www.facebook.com/ftime.fae" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
-                                <i data-lucide="facebook" class="w-4 h-4 md:w-5 md:h-5 text-[#4267B2]"></i>
-                                <span class="text-xs font-bold">Facebook｜食刻食農</span>
-                            </a>
-                            <a href="https://twfooducation.org/" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
-                                <i data-lucide="globe" class="w-4 h-4 md:w-5 md:h-5 text-[#8A9A5B]"></i>
-                                <span class="text-xs font-bold">台灣兒童食育協會</span>
-                            </a>
+    <div class="max-w-6xl mx-auto">
+        <div id="contact-card" class="rounded-[2.5rem] md:rounded-[4rem] overflow-hidden grid md:grid-cols-2 shadow-2xl bg-white border border-[#F0EAE0] transition-theme theme-card">
+            
+            <!-- 左側聯絡資訊 -->
+            <div class="p-8 md:p-16 space-y-8 text-center md:text-left">
+                <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter uppercase">Get in Touch.</h2>
+                <p class="text-base md:text-lg opacity-80 leading-relaxed px-2 md:px-0">
+                    正在尋找能將科學知識與視覺傳達完美結合轉譯的夥伴嗎？<br class="hidden md:block"/>
+                    我隨時準備好為您的食農專案注入新的生命力。
+                </p>
+                <div class="space-y-4">
+                    <button onclick="openContactPopup()" class="w-full text-left flex items-center gap-4 p-5 rounded-3xl bg-[#F9F6F0] border border-[#EAE2D5] theme-card-sub hover:scale-[1.02] transition-transform group">
+                        <div class="w-10 h-10 rounded-xl bg-[#C68E5F] text-white flex items-center justify-center shadow-md transition-transform group-hover:rotate-12">
+                            <i data-lucide="mail"></i>
                         </div>
+                        <div>
+                            <div class="text-[9px] font-bold opacity-40 uppercase tracking-widest">Connect via Email</div>
+                            <div class="font-bold text-sm">foodagri.note01@gmail.com</div>
+                        </div>
+                    </button>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/ftime.fae" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
+                            <i data-lucide="facebook" class="w-4 h-4 md:w-5 md:h-5 text-[#4267B2]"></i>
+                            <span class="text-xs font-bold">Facebook</span>
+                        </a>
+                        <a href="https://twfooducation.org/" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
+                            <i data-lucide="globe" class="w-4 h-4 md:w-5 md:h-5 text-[#8A9A5B]"></i>
+                            <span class="text-xs font-bold">兒童食育協會</span>
+                        </a>
                     </div>
-                </div>
-                <div class="p-8 md:p-16 flex flex-col justify-center bg-[#C68E5F] text-white">
-                    <div class="mb-8 text-center md:text-left">
-                        <h3 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-70 mb-6 md:mb-8 shadow-white-thin">Service Menu</h3>
-                        <ul class="space-y-5 md:space-y-8">
-                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                                <span class="text-xs opacity-50 font-normal shadow-white-thin">01</span> 食農教育教案開發
-                            </li>
-                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                                <span class="text-xs opacity-50 font-normal shadow-white-thin">02</span> 畜產專業知識轉譯
-                            </li>
-                            <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                                <span class="text-xs opacity-50 font-normal shadow-white-thin">03</span> 品牌視覺與插畫設計
-                            </li>
-                        </ul>
-                    </div>
-                    <!--之後記得🦾調整立刻邀課合作的連結表單-->
-                    <a href="#" target="_blank" class="w-full py-5 bg-white text-[#C68E5F] rounded-2xl font-black tracking-widest text-center text-sm transition-all shadow-xl hover:scale-[1.02] active:scale-95 block">
-                        立即邀課合作
-                    </a>
                 </div>
             </div>
+
+            <!-- 右側服務區塊：新增磨砂圓形互動 -->
+            <div class="p-8 md:p-16 flex flex-col justify-center bg-[#C68E5F] text-white relative overflow-hidden group/service">
+                
+                <!-- 💡 磨砂玻璃裝飾圓形 (背景層) -->
+                <!-- 大圓 -->
+                <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-1000 ease-out group-hover/service:scale-110 group-hover/service:-translate-x-12 group-hover/service:-translate-y-12 z-0"></div>
+                <!-- 小圓 -->
+                <div class="absolute right-1/4 top-0 w-24 h-24 rounded-full bg-white/5 backdrop-blur-sm transition-all duration-700 delay-100 group-hover/service:scale-150 group-hover/service:translate-x-10 z-0"></div>
+
+                <!-- 內容層：需設定 z-10 確保在圓形上方 -->
+                <div class="relative z-10 mb-8 text-center md:text-left">
+                    <h3 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-70 mb-6 md:mb-8 shadow-white-thin">Service Menu</h3>
+                    <ul class="space-y-5 md:space-y-8">
+                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                            <span class="text-xs opacity-50 font-normal shadow-white-thin">01</span> 食農教育教案開發
+                        </li>
+                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                            <span class="text-xs opacity-50 font-normal shadow-white-thin">02</span> 畜產專業知識轉譯
+                        </li>
+                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
+                            <span class="text-xs opacity-50 font-normal shadow-white-thin">03</span> 品牌視覺與插畫設計
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 邀課按鈕 -->
+                <a href="#" target="_blank" class="relative z-10 w-full py-5 bg-white text-[#C68E5F] rounded-2xl font-black tracking-widest text-center text-sm transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl active:scale-95 block">
+                    立即邀課合作
+                </a>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
         <!-- 💡 原理學習：新聯絡彈窗結構 -->
     <div id="contact-popup" class="fixed inset-0 z-[250] items-center justify-center p-6 glass-modal-overlay">
@@ -1055,5 +1069,6 @@ END:VCARD`;
     </script>
 </body>
 </html>
+
 
 
