@@ -14,8 +14,62 @@
             font-family: 'Noto Sans TC', sans-serif;
             scroll-behavior: smooth;
             /* --- 電腦版大小雙星鼠標設定 --- */
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23C68E5F'><path d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/><circle cx='24' cy='8' r='2'/><path d='M26 18L27 21L30 22L27 23L26 26L25 23L22 22L25 21L26 18Z' opacity='0.7'/></svg>") 12 12, auto;
+            overflow-x: hidden;
+            /* 預設隱藏箭頭，完全交給 custom-cursor 處理 */
+            cursor: none; 
         }
+
+/* 讓所有可點擊的東西顯示系統預設手指 */
+        .glass-card, button, a, [role="button"], .clickable-item {
+            cursor: pointer !important;
+        }
+
+        #custom-cursor {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            pointer-events: none; /* 確保星星不會擋住下方的點擊 */
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            /* 調整 transition 讓消失更果斷，出現更輕盈 */
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.15s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        /* 🟡 關鍵：當進入點擊區，星星「完全隱身」 */
+        #custom-cursor.is-hidden {
+            opacity: 0 !important;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        /* 🟣 空白處點擊時的強烈放大 */
+        #custom-cursor.cursor-clicking {
+            transform: translate(-50%, -50%) scale(2.2) !important;
+        }
+
+        /* 📚 2. 粒子效果 */
+        .star-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            color: #C68E5F;
+            filter: drop-shadow(0 0 2px rgba(198, 142, 95, 0.2));
+            animation: starFade 1s forwards ease-out;
+        }
+
+        @keyframes starFade {
+            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, 15px) scale(0) rotate(120deg); opacity: 0; }
+        }
+
+
+
+
+
+
 
         a, button, [role="button"], input, select, textarea, .cursor-pointer {
             cursor: pointer !important;
@@ -252,6 +306,16 @@
     </style>
 </head>
 <body class="bg-[#F9F6F0] text-[#4A3728] transition-theme" id="body-root">
+
+    <!-- 🌟 補回遺失的星星鼠標結構 -->
+    <div id="custom-cursor">
+        <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='#C68E5F'>
+            <path d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/>
+            <circle cx='24' cy='8' r='2'/>
+            <path d='M26 18L27 21L30 22L27 23L26 26L25 23L22 22L25 21L26 18Z' opacity='0.7'/>
+        </svg>
+    </div>
+
 
     <!-- 1. 智慧護眼條 -->
     <div id="eyecare-bar" class="fixed top-0 w-full z-[120] text-[10px] px-4 py-1.5 flex justify-between items-center bg-[#C68E5F] text-white">
@@ -646,6 +710,67 @@
     </footer>
 
     <script>
+
+ lucide.createIcons();
+
+        const cursor = document.getElementById('custom-cursor');
+        const stars = ['★', '☆', '✧', '✦'];
+        let lastX = 0;
+        let lastY = 0;
+
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                if (cursor) {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                }
+
+                // 偵測滑鼠下方的元素
+                const target = document.elementFromPoint(e.clientX, e.clientY);
+                
+                // 這裡就是魔法所在：它會自動向上尋找是否屬於這些「點擊元素」
+                const isHoveringPointer = target && target.closest('.glass-card, button, a, [role="button"], input, label, .clickable-item');
+                
+                if (isHoveringPointer) {
+                    cursor.classList.add('is-hidden');
+                } else {
+                    cursor.classList.remove('is-hidden');
+                }
+
+                const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+                if (dist > 25 && !isHoveringPointer) { 
+                    createStar(e.clientX, e.clientY);
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                }
+            });
+
+            document.addEventListener('mousedown', () => {
+                if (cursor && !cursor.classList.contains('is-hidden')) {
+                    cursor.classList.add('cursor-clicking');
+                }
+            });
+            document.addEventListener('mouseup', () => {
+                if (cursor) cursor.classList.remove('cursor-clicking');
+            });
+        } else {
+            if (cursor) cursor.style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
+
+        function createStar(x, y) {
+            const star = document.createElement('div');
+            star.className = 'star-particle';
+            star.innerText = stars[Math.floor(Math.random() * stars.length)];
+            star.style.left = x + 'px';
+            star.style.top = y + 'px';
+            const size = Math.random() * 8 + 8;
+            star.style.fontSize = size + 'px';
+            star.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 1000);
+        }
+
         lucide.createIcons();
 
         let darkMode = false;
@@ -930,6 +1055,5 @@ END:VCARD`;
     </script>
 </body>
 </html>
-
 
 
