@@ -318,17 +318,20 @@
 
 
     <!-- 1. 智慧護眼條 -->
-    <div id="eyecare-bar" class="fixed top-0 w-full z-[120] text-[10px] px-4 py-1.5 flex justify-between items-center bg-[#C68E5F] text-white">
-        <div class="flex items-center gap-1 font-medium tracking-widest shadow-white-thin">
-            <i data-lucide="shield-check" class="w-3 h-3"></i>
-            <span class="uppercase" id="eyecare-status">Eye-Care Mode Active</span>
-        </div>
-        <div class="flex gap-4 items-center font-bold">
-            <button onclick="toggleAuto()" id="auto-btn" class="hover:opacity-70 transition shadow-white-thin">AUTO</button>
-            <div class="w-[1px] h-3 bg-white/20"></div>
-            <button onclick="toggleDarkMode()" class="hover:scale-110 transition shadow-white-thin">
-                <i data-lucide="moon" id="theme-icon" class="w-3 h-3"></i>
-            </button>
+    <div id="eyecare-bar" class="fixed top-0 w-full z-[120] text-[10px] px-4 py-1.5 bg-[#C68E5F] text-white">
+        <!-- 新增與導航欄一致的容器，達成垂直對齊 -->
+        <div class="max-w-6xl mx-auto flex justify-between items-center px-2 md:px-6">
+            <div class="flex items-center gap-1 font-medium tracking-widest shadow-white-thin">
+                <i data-lucide="shield-check" class="w-3 h-3"></i>
+                <span class="uppercase" id="eyecare-status">Eye-Care Mode Active</span>
+            </div>
+            <div class="flex gap-4 items-center font-bold">
+                <button onclick="toggleAuto()" id="auto-btn" class="hover:opacity-70 transition shadow-white-thin">AUTO</button>
+                <div class="w-[1px] h-3 bg-white/20"></div>
+                <button onclick="toggleDarkMode()" class="hover:scale-110 transition shadow-white-thin">
+                    <i data-lucide="moon" id="theme-icon" class="w-3 h-3"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1069,6 +1072,7 @@ END:VCARD`;
     </script>
 </body>
 </html>
+
 
 
 
