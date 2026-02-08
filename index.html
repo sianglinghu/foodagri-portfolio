@@ -3,1129 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>食刻食農 | 胡湘苓 | 食農教育講師與設計師</title>
-    <link rel="icon" href="https://lh3.googleusercontent.com/d/1njtRZf4I47sqjqiGRbRLbfPiFXf_XhDp" type="image/png">
+    <title>胡湘苓｜食刻食農 - 暫時性入口</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
         
+        :root {
+            /* 🌅 太陽升起 (Sunrise) */
+            --bg-main: #FCFCF7;
+            --bg-card: #FFFFFF;
+            --primary: #8A964E;
+            --accent: #B2BD7E;
+            --text-main: #2D2D26;
+            --text-sub: #6B7280;
+            --icon-bg: #F7F9ED;
+            --border: #EAEAE0;
+            --gradient-start: #F2F4E8;
+        }
+
+        /* 🌊 海洋清晨 (Ocean Morning) */
+        .theme-ocean-morning {
+            --bg-main: #F0F7FA;
+            --bg-card: #FFFFFF;
+            --primary: #4A90E2;
+            --accent: #A5C7E9;
+            --text-main: #1F2D3D;
+            --text-sub: #5E6D82;
+            --icon-bg: #E6F1FC;
+            --border: #DDE8F0;
+            --gradient-start: #E1F0F7;
+        }
+
+        /* ☀️ 日正當中 (Noon) */
+        .theme-noon {
+            --bg-main: #FFFBF2;
+            --bg-card: #FFFFFF;
+            --primary: #D4A373;
+            --accent: #E9C46A;
+            --text-main: #3D3D3D;
+            --text-sub: #7D7D7D;
+            --icon-bg: #FEF9E7;
+            --border: #F2E9D0;
+            --gradient-start: #FEF5E7;
+        }
+
+        /* 🌆 傍晚海洋 (Sunset Sea) */
+        .theme-sunset-sea {
+            --bg-main: #1A2A3A;
+            --bg-card: #243447;
+            --primary: #F4A261;
+            --accent: #E76F51;
+            --text-main: #E0E6ED;
+            --text-sub: #94A3B8;
+            --icon-bg: #2C3E50;
+            --border: #2D3D4D;
+            --gradient-start: #16212B;
+        }
+
+        /* 🌲 靜謐山林 (Mountain Forest) */
+        .theme-mountain-forest {
+            --bg-main: #131811; 
+            --bg-card: #1E241A;
+            --primary: #B2BD7E;
+            --accent: #8A964E;
+            --text-main: #F0F0E8;
+            --text-sub: #A8A89A;
+            --icon-bg: #2D3628;
+            --border: #2D3325;
+            --gradient-start: #1A2217;
+        }
+
+        /* 🌙 半夜月色 (Midnight) */
+        .theme-midnight {
+            --bg-main: #0F0F1A;
+            --bg-card: #1A1A2E;
+            --primary: #A29BFE;
+            --accent: #6C5CE7;
+            --text-main: #E6E6FA;
+            --text-sub: #8B8B9C;
+            --icon-bg: #252545;
+            --border: #252545;
+            --gradient-start: #0A0A12;
+        }
+
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            scroll-behavior: smooth;
-            /* --- 電腦版大小雙星鼠標設定 --- */
-            overflow-x: hidden;
-            /* 預設隱藏箭頭，完全交給 custom-cursor 處理 */
-            cursor: none; 
+            font-weight: 700; 
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
 
-/* 讓所有可點擊的東西顯示系統預設手指 */
-        .glass-card, button, a, [role="button"], .clickable-item {
-            cursor: pointer !important;
+        .header-gradient {
+            background: linear-gradient(180deg, var(--gradient-start) 0%, var(--bg-main) 100%);
         }
 
-        #custom-cursor {
-            position: fixed;
-            width: 32px;
-            height: 32px;
-            pointer-events: none; /* 確保星星不會擋住下方的點擊 */
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            /* 調整 transition 讓消失更果斷，出現更輕盈 */
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.15s ease-out;
+        /* 暗色主題的發光效果 */
+        .theme-mountain-forest .header-gradient, 
+        .theme-midnight .header-gradient,
+        .theme-sunset-sea .header-gradient {
+            background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.05) 0%, var(--bg-main) 70%);
+        }
+
+        .link-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .link-card:active { transform: scale(0.97); background-color: var(--icon-bg); }
+
+        .icon-box { background-color: var(--icon-bg); color: var(--primary); }
+
+        .tag {
+            background-color: var(--icon-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            padding: 2px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        /* 🎨 優化：更精緻縮小的置頂切換器 */
+        .theme-panel-container {
+            position: absolute;
+            top: 12px; /* 更置頂 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            width: auto;
+            min-width: 240px;
+        }
+
+        .theme-panel {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            gap: 4px; /* 緊湊間距 */
+        }
+        
+        .theme-mountain-forest .theme-panel, 
+        .theme-midnight .theme-panel,
+        .theme-sunset-sea .theme-panel {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-btn {
+            width: 34px; /* 縮小尺寸 */
+            height: 34px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-sub);
+            opacity: 0.6;
+        }
+        .theme-btn i { width: 16px; height: 16px; } /* 圖示隨之縮小 */
+        .theme-btn.active-btn {
             opacity: 1;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            transform: translateY(-1px);
         }
 
-        /* 🟡 關鍵：當進入點擊區，星星「完全隱身」 */
-        #custom-cursor.is-hidden {
-            opacity: 0 !important;
-            transform: translate(-50%, -50%) scale(0);
-        }
-
-        /* 🟣 空白處點擊時的強烈放大 */
-        #custom-cursor.cursor-clicking {
-            transform: translate(-50%, -50%) scale(2.2) !important;
-        }
-
-        /* 📚 2. 粒子效果 */
-        .star-particle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            color: #C68E5F;
-            filter: drop-shadow(0 0 2px rgba(198, 142, 95, 0.2));
-            animation: starFade 1s forwards ease-out;
-        }
-
-        @keyframes starFade {
-            0% { transform: translate(-50%, -50%) scale(0.5) rotate(0deg); opacity: 1; }
-            100% { transform: translate(-50%, 15px) scale(0) rotate(120deg); opacity: 0; }
-        }
-
-
-
-
-
-
-
-        a, button, [role="button"], input, select, textarea, .cursor-pointer {
-            cursor: pointer !important;
-        }
-
-        .shadow-white-bold {
-            text-shadow: 0 2px 4px rgba(44, 27, 18, 0.4), 0 4px 12px rgba(44, 27, 18, 0.1);
-        }
-        .shadow-white-thin {
-            text-shadow: 0 1px 2px rgba(44, 27, 18, 0.3);
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 40s linear infinite;
-        }
-        .pause-animation {
-            animation-play-state: paused !important;
-        }
-
-        .transition-theme {
-            transition: background-color 0.7s ease, color 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
-        }
-
-        .glass-nav {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #F9F6F0;
-        }
-        .dark-mode ::-webkit-scrollbar-track {
-            background: #2C1B12;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #C68E5F;
-            border-radius: 10px;
-        }
-
-        .overflow-hidden {
-            overflow: hidden;
-        }
-
-        section {
-            scroll-margin-top: 80px;
-        }
-
-        /* --- 藝廊小卡互動修正（半透明漸層遮罩） --- */
-        .gallery-card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(45, 27, 16, 0.9) 0%, rgba(45, 27, 16, 0.4) 50%, transparent 100%);
+        .reveal {
             opacity: 0;
-            transition: opacity 0.6s ease;
-            z-index: 15;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
         }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .gallery-card-content {
-            opacity: 0;
-            transform: translateY(1.5rem);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 20;
-        }
-        
-        /* 電腦版：維持 Hover 顯示遮罩與文字 */
-        @media (min-width: 1024px) {
-            .group\/card:hover .gallery-card-overlay {
-                opacity: 1;
-            }
-            .group\/card:hover .gallery-card-content {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 手機版：由 JS 控制的 .is-visible 類別觸發 */
-        @media (max-width: 1023px) {
-            .group\/card.is-visible .gallery-card-overlay {
-                opacity: 1;
-            }
-            .group\/card.is-visible .gallery-card-content {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        #eyecare-bar {
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(0);
-        }
-        
-        .eyecare-hidden {
-            transform: translateY(-100%) !important;
-        }
-        
-        #navbar {
-            top: 27px;
-            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.7s ease, border-color 0.7s ease;
-        }
-
-        .dark-mode {
-            background-color: #2C1B12 !important;
-            color: #EAD7C3 !important;
-        }
-
-        .dark-mode #navbar {
-            background-color: rgba(44, 27, 18, 0.95) !important;
-            border-color: #3D2B1F !important;
-        }
-
-        .dark-mode #hero-title {
-            color: #F9F6F0 !important;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        .dark-mode .section-bg {
-            background-color: rgba(61, 43, 31, 0.5) !important;
-        }
-
-        .dark-mode .theme-card {
-            background-color: #3D2B1F !important;
-            border-color: #4A3728 !important;
-            color: #EAD7C3 !important;
-        }
-
-        .dark-mode .theme-card-sub {
-            background-color: rgba(74, 55, 40, 0.5) !important;
-            border-color: #4A3728 !important;
-            color: #EAD7C3 !important;
-        }
-
-        .dark-mode .theme-bento-card {
-            background-color: #3D2B1F !important;
-            border-color: #4A3728 !important;
-        }
-
-        .dark-mode .bento-title {
-            color: #F9F6F0 !important;
-        }
-
-        .dark-mode .bento-desc {
-            color: #EAD7C3;
-            opacity: 0.8;
-        }
-
-        .dark-mode .theme-btn-secondary {
-            background-color: rgba(74, 55, 40, 0.5) !important;
-            border-color: #4A3728 !important;
-            color: #EAD7C3 !important;
-        }
-
-        .dark-mode footer {
-            border-color: #3D2B1F !important;
-        }
-
-        .dark-mode #eyecare-bar {
-            background-color: #3D2B1F !important;
-            color: #C68E5F !important;
-        }
-
-        .dark-mode #eyecare-bar button, .dark-mode #eyecare-bar div {
-            color: #C68E5F !important;
-        }
-        
-        .dark-mode #eyecare-bar .bg-white\/20 {
-            background-color: rgba(198, 142, 95, 0.2) !important;
-        }
-
-        .dark-mode #mobile-menu {
-            background-color: #2C1B12 !important;
-            color: #EAD7C3 !important;
-        }
-
-        @media (max-width: 767px) {
-            .hero-image-mask {
-                mask-image: radial-gradient(120% 100% at 50% 0%, black 75%, transparent 100%);
-                -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, black 75%, transparent 100%);
-                overflow: hidden;
-            }
-        }
-
-        .expertise-modal {
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        .expertise-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-         /* 💡 原理學習：升級版聯絡彈窗 CSS */
         .glass-modal-overlay {
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            background: rgba(0, 0, 0, 0.4);
-            display: none; /* 初始隱藏 */
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            display: none;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .glass-modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
+        .glass-modal-overlay.active { display: flex; opacity: 1; }
         .glass-modal-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background: var(--bg-card);
+            color: var(--text-main);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .dark-mode .glass-modal-card {
-            background: rgba(45, 36, 29, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        /* 複製成功的小氣泡動畫 */
-        @keyframes toastUp {
-            0% { transform: translate(-50%, 20px); opacity: 0; }
-            20% { transform: translate(-50%, 0); opacity: 1; }
-            80% { transform: translate(-50%, 0); opacity: 1; }
-            100% { transform: translate(-50%, -20px); opacity: 0; }
-        }
-        .copy-toast {
-            animation: toastUp 2s ease-in-out forwards;
-        }
+        .glass-modal-overlay.active .glass-modal-card { transform: scale(1); }
     </style>
 </head>
-<body class="bg-[#F9F6F0] text-[#4A3728] transition-theme" id="body-root">
+<body id="body-root" class="min-h-screen pb-20">
 
-    <!-- 🌟 補回遺失的星星鼠標結構 -->
-    <div id="custom-cursor">
-        <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='#C68E5F'>
-            <path d='M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z'/>
-            <circle cx='24' cy='8' r='2'/>
-            <path d='M26 18L27 21L30 22L27 23L26 26L25 23L22 22L25 21L26 18Z' opacity='0.7'/>
-        </svg>
-    </div>
-
-
-    <!-- 1. 智慧護眼條 -->
-    <div id="eyecare-bar" class="fixed top-0 w-full z-[120] text-[10px] px-4 py-1.5 bg-[#C68E5F] text-white">
-        <!-- 新增與導航欄一致的容器，達成垂直對齊 -->
-        <div class="max-w-6xl mx-auto flex justify-between items-center px-2 md:px-6">
-            <div class="flex items-center gap-1 font-medium tracking-widest shadow-white-thin">
-                <i data-lucide="shield-check" class="w-3 h-3"></i>
-                <span class="uppercase" id="eyecare-status">Eye-Care Mode Active</span>
-            </div>
-            <div class="flex gap-4 items-center font-bold">
-                <button onclick="toggleAuto()" id="auto-btn" class="hover:opacity-70 transition shadow-white-thin">AUTO</button>
-                <div class="w-[1px] h-3 bg-white/20"></div>
-                <button onclick="toggleDarkMode()" class="hover:scale-110 transition shadow-white-thin">
-                    <i data-lucide="moon" id="theme-icon" class="w-3 h-3"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. 導航欄 -->
-    <nav id="navbar" class="fixed w-full z-[110] transition-theme bg-[#F9F6F0]/90 border-b border-[#EAE2D5] glass-nav">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C68E5F] text-white shadow-white-bold">
-                    <img  class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C68E5F] text-white shadow-white-bold" src="https://lh3.googleusercontent.com/d/1njtRZf4I47sqjqiGRbRLbfPiFXf_XhDp" 
-     alt="食刻食農LOGO" 
-     class="w-full h-full object-cover">
-                </div>
-               <div class="flex flex-col gap-1"> <!-- 加入 gap-1 來拉開距離 -->
-    <span class="text-lg font-bold tracking-tighter leading-none">食刻食農｜胡湘苓</span>
-    <span class="text-[9px] font-light tracking-[0.3em] opacity-60 uppercase">Food and Agri - Education</span>
-</div>
-            </a>
-            
-            <div class="hidden md:flex space-x-10">
-                <a href="#about" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">關於湘苓</a>
-                <a href="#background" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">經歷養成</a>
-                <a href="#expertise" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">專業菜單</a>
-                <a href="#portfolio" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">作品藝廊</a>
-                <a href="#contact" class="text-[11px] font-bold hover:text-[#C68E5F] transition-colors tracking-[0.2em]">預約特餐</a>
-            </div>
-
-            <button class="md:hidden p-2 relative z-[120]" onclick="toggleMenu()">
-                <i data-lucide="menu" id="menu-icon-trigger"></i>
+    <!-- 🎨 氛圍切換器：尺寸已優化縮小且更置頂 -->
+    <div class="theme-panel-container">
+        <div class="p-1 rounded-[14px] theme-panel shadow-md">
+            <button onclick="setTheme('default', this)" class="theme-btn active-btn bg-[#B2BD7E]" title="太陽升起">
+                <i data-lucide="sunrise"></i>
+            </button>
+            <button onclick="setTheme('ocean-morning', this)" class="theme-btn" title="海洋清晨">
+                <i data-lucide="waves"></i>
+            </button>
+            <button onclick="setTheme('noon', this)" class="theme-btn" title="日正當中">
+                <i data-lucide="sun"></i>
+            </button>
+            <button onclick="setTheme('sunset-sea', this)" class="theme-btn" title="傍晚海洋">
+                <i data-lucide="cloud-sun"></i>
+            </button>
+            <button onclick="setTheme('mountain-forest', this)" class="theme-btn" title="靜謐山林">
+                <i data-lucide="mountain"></i>
+            </button>
+            <button onclick="setTheme('midnight', this)" class="theme-btn" title="半夜月色">
+                <i data-lucide="moon"></i>
             </button>
         </div>
-    </nav>
+    </div>
 
-    <!-- 3. Mobile Menu & Overlay -->
-    <div id="menu-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[105] opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
-    
-    <div id="mobile-menu" class="fixed inset-0 top-0 left-0 w-full h-full bg-[#F9F6F0] z-[108] p-10 pt-32 flex flex-col space-y-6 transform translate-x-full transition-transform duration-500 ease-in-out">
-        <a href="#about" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">關於湘苓</a>
-        <a href="#background" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">經歷養成</a>
-        <a href="#expertise" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">專業菜單</a>
-        <a href="#portfolio" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">作品藝廊</a>
-        <a href="#contact" onclick="toggleMenu()" class="text-4xl font-black italic tracking-tighter hover:text-[#C68E5F] transition-colors">預約特餐</a>
+    <!-- 1. 頁首區塊 -->
+    <header class="header-gradient pt-20 pb-12 px-6 text-center reveal">
+        <div class="relative inline-block mb-10">
+            <div class="w-48 h-48 bg-white rounded-full mx-auto p-1.5 shadow-2xl overflow-hidden border-4 border-[var(--accent)]">
+                <img src="https://twfooducation.org/wp-content/uploads/2025/10/%E8%83%A1%E6%B9%98%E8%8B%93_%E4%B8%89%E5%85%83%E8%80%81%E5%B8%AB%E6%94%9D%E5%BD%B101%E8%AA%BF%E8%89%B2%E6%AD%A3%E6%96%B9-1-%E8%83%A1%E6%B9%98%E8%8B%93-1536x1536.jpg" alt="胡湘苓" class="w-full h-full object-cover rounded-full">
+            </div>
+            <div class="absolute bottom-2 right-4 bg-[var(--primary)] p-3 rounded-full border-4 border-[var(--bg-main)] text-white shadow-lg transition-colors duration-500">
+                <i data-lucide="leaf" class="w-7 h-7"></i>
+            </div>
+        </div>
         
-        <div class="pt-10 border-t border-[#EAE2D5]">
-            <p class="text-[10px] font-bold tracking-widest opacity-40 uppercase">Let's Connect</p>
-            <div class="flex gap-4 mt-4">
-                <a href="https://www.facebook.com/ftime.fae" target="_blank" class="hover:text-[#C68E5F] transition-colors">
-                    <i data-lucide="facebook" class="w-6 h-6 opacity-60"></i>
-                </a>
-                <a href="https://www.instagram.com/ftime.fae" target="_blank" class="hover:text-[#C68E5F] transition-colors">
-                    <i data-lucide="instagram" class="w-6 h-6 opacity-60"></i>
-                </a>
-               <!-- 💡 原理學習：行動版底部選單也同步改為彈窗 -->
-                <button onclick="openContactPopup()"><i data-lucide="mail" class="w-6 h-6 opacity-60"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. Hero Section - 手機版原樣 + 桌機版舞台設計 -->
-<section id="about" class="pt-20 md:pt-40 pb-12 md:pb-20 px-0 md:px-6 relative overflow-hidden">
-    <!-- 背景裝飾球 -->
-    <div class="absolute top-40 -left-20 w-80 h-80 bg-[#C68E5F]/5 rounded-full blur-3xl"></div>
-    
-    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 md:gap-16 items-center relative z-10">
+        <h1 class="text-4xl font-black tracking-tight mb-2">胡湘苓｜April</h1>
+        <p class="text-xl font-black mb-6 tracking-[0.15em] uppercase" style="color: var(--primary);">食農教育第一線設計師</p>
         
-        <!-- 右側圖片區 -->
-        <div class="flex justify-center md:justify-end order-1 md:order-2 px-0 md:px-0">
-            <!-- 容器：在桌機版 (md) 設定固定最大寬度與舞台效果 -->
-            <div class="relative w-full md:max-w-[500px] md:aspect-square flex items-center justify-center">
-                
-                <!-- 裝飾線 -->
-                <!-- 手機版：原本的 inset-6 樣式 -->
-                <div class="hidden sm:block md:hidden absolute -inset-6 rounded-[3rem] border border-[#C68E5F]/20 animate-pulse"></div>
-                <!-- 桌機版：擴張為舞台背景的 inset-0 樣式 -->
-                <div class="hidden md:block absolute inset-0 rounded-[4rem] border border-[#C68E5F]/30 animate-pulse rotate-6"></div>
-                
-                <!-- 圖片主體 -->
-                <div class="hero-image-mask relative 
-                            /* 手機版樣式：原本的比例與圓角 */
-                            aspect-[4/3] w-full rounded-none 
-                            /* 桌機版樣式：縮小為 85% 營造留白空間，圓角加大，增加旋轉 */
-                            md:aspect-square md:w-[85%] md:rounded-[3.5rem] 
-                            overflow-hidden shadow-2xl transition-all duration-700 bg-[#EAD7C3] 
-                            md:rotate-3 md:hover:rotate-0 hover:scale-105">
-                    
-                    <img src="https://lh3.googleusercontent.com/d/1vvQUFI259AcObMwmL5Zswd6bkGIboGDg" 
-                         alt="胡湘苓商業視覺照片側寫修圖" 
-                         class="w-full h-full object-cover">
-                    
-                    <!-- 圖片上的微光裝飾 (桌機版增加質感) -->
-                    <div class="absolute inset-0 bg-gradient-to-tr from-[#3D2B1F]/10 to-transparent pointer-events-none hidden md:block"></div>
-                </div>
+        <div class="max-w-xs mx-auto text-base leading-relaxed font-bold mb-6" style="color: var(--text-sub);">
+            中興動科背景 ‧ 「食刻食農」創辦人<br>
+            擅長用遊戲與視覺，刻劃土地的故事。
+        </div>
 
-              <!-- 生態元素裝飾：僅在桌機版顯示，改為純線框設計 -->
-                <!-- 1. 太陽 (右上) - 改為線框 -->
-                <div class="absolute -top-4 -right-11 w-12 h-12 bg-transparent border border-[#C68E5F]/30 dark:border-[#C68E5F]/30 rounded-2xl shadow-sm hidden md:flex items-center justify-center rotate-12 hover:rotate-0 transition-all cursor-default">
-                    <i data-lucide="sun" class="text-[#C68E5F]/30 w-6 h-6"></i>
-                </div>
+        <div class="flex flex-wrap justify-center gap-2 max-w-sm mx-auto">
+            <span class="tag">#插畫設計</span>
+            <span class="tag">#知識轉譯</span>
+            <span class="tag">#遊戲化教學</span>
+        </div>
+    </header>
 
-                <!-- 2. 水滴 (右下) - 改為線框 -->
-                <div class="absolute bottom-10 -right-12 w-10 h-10 bg-transparent border border-[#C68E5F]/40 rounded-xl hidden md:flex items-center justify-center -rotate-12 hover:scale-110 transition-transform">
-                    <i data-lucide="droplets" class="text-[#C68E5F]/40 w-5 h-5"></i>
-                </div>
+    <!-- 2. 連結列表區塊 -->
+    <main class="max-w-md mx-auto px-6 space-y-6">
+        <p class="text-[13px] font-black opacity-50 tracking-[0.2em] uppercase pl-2 mb-2">Portfolio & Social</p>
 
-                <!-- 3. 風 (左上) - 改為線框 -->
-                <div class="absolute top-12 -left-12 w-10 h-10 bg-transparent border border-[#C68E5F]/40 rounded-xl hidden md:flex items-center justify-center rotate-6 hover:scale-110 transition-transform">
-                    <i data-lucide="wind" class="text-[#C68E5F]/30 w-5 h-5"></i>
-                </div>
-
-                <!-- 4. 新芽 (左下) - 改為線框 -->
-                <div class="absolute -bottom-2 left-10 w-12 h-12 bg-transparent border border-[#C68E5F]/40 rounded-2xl hidden md:flex items-center justify-center -rotate-6 hover:scale-110 transition-transform">
-                    <i data-lucide="leaf" class="text-[#C68E5F]/30 w-6 h-6"></i>
-                </div>
-
-                <!-- 5. 點綴用小方形 (維持線框) -->
-                <div class="absolute top-1/4 -right-10 w-4 h-4 border border-[#C68E5F]/30 rounded-sm hidden md:block animate-spin-slow"></div>
-              <div class="absolute bottom-1/3 -left-11 w-6 h-6 border-2 border-[#C68E5F]/30 rounded-md hidden md:block animate-bounce-slow"></div>
-          <div class="absolute bottom-1/4 -left-12 w-3 h-3 border-2 border-[#C68E5F]/20 rounded-sm hidden md:block animate-bounce-slow"></div>
+        <a href="https://www.facebook.com/ftime.fae" target="_blank" class="link-card flex items-center p-6 rounded-[2.5rem] shadow-sm hover:shadow-lg reveal">
+            <div class="w-14 h-14 icon-box rounded-2xl flex items-center justify-center mr-5 transition-colors duration-500">
+                <i data-lucide="facebook" class="w-8 h-8"></i>
             </div>
-        </div>
-
-        <!-- 左側文字區：維持原版設定 -->
-        <div class="text-center md:text-left order-2 md:order-1 px-6 md:px-0">
-            <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
-                <i data-lucide="sparkles" class="w-4 h-4 text-[#C68E5F]"></i>
-                <span class="text-[11px] font-bold tracking-[0.3em] uppercase opacity-60">Food-Agri Communicator</span>
+            <div class="flex-1">
+                <h3 class="text-lg font-black">食刻食農 FB 粉專</h3>
+                <p class="text-[13px] font-bold opacity-60">分享食農現場與視覺轉譯知識</p>
             </div>
-            
-            <h1 class="text-4xl md:text-7xl font-black mb-4 md:mb-8 leading-[1.2] md:leading-[1.1] text-[#3D2B1F] transition-theme" id="hero-title">
-                我是湘苓！<br />
-                <span class="text-xl md:text-2xl text-[#C68E5F] mt-2 block md:inline">也可以叫我 April / Apple <i data-lucide="apple" class="w-5 h-5 inline-block mb-1"></i> ～</span>
-            </h1>
-            
-            <p class="text-base md:text-lg mb-6 md:mb-12 max-w-lg mx-auto md:mx-0 leading-relaxed opacity-80 px-4 md:px-0">
-                在中興動科的科學基底上，我用設計與教育作為轉譯器，將硬核的畜產知識，烘焙成每個人都能消化的暖心內容。
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4">
-                <a href="#contact" class="px-10 py-4 bg-[#C68E5F] text-white rounded-2xl font-bold hover:shadow-2xl transition-all text-center text-sm hover:-translate-y-1 shadow-white-bold flex items-center justify-center gap-2">
-                    聯繫｜開始合作提案
-                </a>
-                <a href="#portfolio" class="px-10 py-4 rounded-2xl font-bold border border-[#EAE2D5] bg-white text-[#4A3728] shadow-sm hover:bg-gray-50 transition-all text-center text-sm theme-btn-secondary">
-                    探索｜過往食農設計
-                </a>
+            <i data-lucide="chevron-right" class="opacity-30 w-6 h-6"></i>
+        </a>
+
+        <a href="https://www.canva.com/design/DAHAP_Wcano/vnIdSe756tz2XuvmH8UQGw/view?utm_content=DAHAP_Wcano&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc08ce2c056" target="_blank" class="link-card flex items-center p-6 rounded-[2.5rem] shadow-sm hover:shadow-lg reveal delay-100">
+            <div class="w-14 h-14 icon-box rounded-2xl flex items-center justify-center mr-5 transition-colors duration-500">
+                <i data-lucide="palette" class="w-8 h-8"></i>
             </div>
-        </div>
-
-    </div>
-</section>
-
-    <!-- 5. Background & Identity -->
-    <section id="background" class="py-12 md:py-20 px-4 md:px-6 bg-[#EAE2D5]/30 transition-theme section-bg">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-8 md:mb-12 text-center md:text-left">
-                <span class="text-[#C68E5F] text-[10px] md:text-[11px] font-black tracking-[0.3em] uppercase">Journey & Identity</span>
-                <h2 class="text-2xl md:text-4xl font-black mt-1 md:mt-2 mb-2 italic tracking-tighter uppercase leading-tight">讓我們了解更多餐盤裡的食物！</h2>
-                <p class="text-[9px] md:text-xs opacity-50 tracking-widest uppercase">しょくじ ‧ しょく育 | 食卓の中身をもっと知りましょう!</p>
+            <div class="flex-1">
+                <h3 class="text-lg font-black">視覺設計作品集</h3>
+                <p class="text-[13px] font-bold opacity-60">教案開發、插畫與視覺轉譯紀錄</p>
             </div>
-            <div class="grid md:grid-cols-12 gap-6 md:gap-12 items-start">
-                <div class="md:col-span-5">
-                    <div class="bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem] shadow-sm border border-[#EAE2D5] transition-theme theme-card">
-                        <div class="flex items-center gap-3 mb-6 md:mb-8">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-[#8A9A5B]/10 flex items-center justify-center text-[#8A9A5B]">
-                                <i data-lucide="graduation-cap" class="w-5 h-5 md:w-6 md:h-6"></i>
-                            </div>
-                            <h3 class="text-lg md:text-xl font-bold tracking-tight">背景與身分</h3>
-                        </div>
-                        <ul class="space-y-6 md:space-y-8">
-                            <li class="flex flex-col">
-                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Education</span>
-                                <span class="font-bold text-base md:text-lg">國立中興大學 動物科學系 學士</span>
-                            </li>
-                            <li class="flex flex-col">
-                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Current Role</span>
-                                <span class="font-bold italic text-xl md:text-2xl block">食刻食農 － 創辦人</span>
-                            </li>
-                            <li class="flex flex-col">
-                                <span class="text-[9px] md:text-[10px] font-black text-[#C68E5F] uppercase tracking-widest mb-1">Core Affiliations</span>
-                                <div class="grid grid-cols-1 gap-2 md:gap-3 mt-2">
-                                    <div class="flex items-start gap-2 text-xs md:text-base">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
-                                        <span>台灣兒童食育協會 － 食育講師</span>
-                                    </div>
-                                    <div class="flex items-start gap-2 text-xs md:text-base">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
-                                        <span>食通信台灣事務局 － 食通信推進員</span>
-                                    </div>
-                                    <div class="flex items-start gap-2 text-xs md:text-base">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
-                                        <span>eFOOOD 惜食教育 － 師培講師/專案經理</span>
-                                    </div>
-                                    <div class="flex items-start gap-2 text-xs md:text-base">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-[#C68E5F] mt-1.5 shrink-0"></div>
-                                        <span>大豆產業策略聯盟 － 台灣大豆種子講師</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="md:col-span-7 space-y-4">
-                    <div class="flex items-center gap-3 mb-2 px-2 md:px-0">
-                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-[#C68E5F]/10 flex items-center justify-center text-[#C68E5F]">
-                            <i data-lucide="briefcase" class="w-5 h-5 md:w-6 md:h-6"></i>
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold tracking-tight">專長與歷練</h3>
-                    </div>
-                    <div class="grid grid-cols-1 gap-3 md:gap-4">
-                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
-                            <div>
-                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">《咕咕大探險》</h4>
-                                <p class="text-[11px] md:text-sm opacity-70">主編及美編插畫</p>
-                            </div>
-                            <i data-lucide="book-open" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
-                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
-                            <div>
-                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">艾普莉絲設計</h4>
-                                <p class="text-[11px] md:text-sm opacity-70">平面與插畫設計</p>
-                            </div>
-                            <i data-lucide="pen-tool" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
-                        <a href="#" class="bg-white/50 p-5 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-[#EAE2D5] flex justify-between items-center group hover:bg-white transition-all theme-card-sub">
-                            <div>
-                                <h4 class="font-bold text-[#C68E5F] text-base md:text-lg">優豬 / 優雞可尋</h4>
-                                <p class="text-[11px] md:text-sm opacity-70">知識轉譯編輯</p>
-                            </div>
-                            <i data-lucide="database" class="w-5 h-5 md:w-6 md:h-6 opacity-20 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <i data-lucide="external-link" class="opacity-30 w-6 h-6"></i>
+        </a>
 
-    <!-- 6. Expertise Section -->
-    <section id="expertise" class="py-12 md:py-20 px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-10 md:mb-16">
-            <h2 class="text-3xl font-black mb-3 italic tracking-tighter uppercase">Skills Bento.</h2>
-            <div class="w-12 h-1 bg-[#C68E5F] mx-auto rounded-full"></div>
-        </div>
-
-        <div class="hidden md:grid grid-cols-3 gap-10">
-            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
-                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#C68E5F] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
-                    <i data-lucide="microscope"></i>
-                </div>
-                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">主食：畜產轉譯</h3>
-                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">中興動科背景，將嚴謹的科學數據，轉化為大眾餐桌上聽得懂、有溫度的語言。</p>
-                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
-                    Livestock Science Translation <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                </div>
-            </a>
-            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
-                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#8A9A5B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
-                    <i data-lucide="mic-2"></i>
-                </div>
-                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">主菜：食農講師</h3>
-                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">致力於生命教育，在全台各地播下食農種子，連結消費者與生產者的斷層。</p>
-                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
-                    Food and Agriculture Educator <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                </div>
-            </a>
-            <a href="#portfolio" class="group p-10 rounded-[2.5rem] bg-white border border-[#F0EAE0] hover:shadow-2xl hover:border-[#C68E5F]/40 transition-theme duration-500 theme-bento-card">
-                <div class="mb-6 w-16 h-16 rounded-3xl bg-[#E29578] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500 text-white shadow-white-bold">
-                    <i data-lucide="palette"></i>
-                </div>
-                <h3 class="text-xl font-black mb-4 tracking-tight bento-title">配菜：視覺美學</h3>
-                <p class="leading-relaxed text-sm opacity-80 mb-6 bento-desc">擅長將繁複資訊圖像化，用細膩的手繪感插畫，為農產品牌注入獨特靈魂。</p>
-                <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F] opacity-0 group-hover:opacity-100 transition-opacity">
-                    Visual Storytelling <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                </div>
-            </a>
-        </div>
-
-        <div class="md:hidden flex justify-center items-center gap-8 py-4">
-            <button onclick="openExpertiseModal(0)" class="flex flex-col items-center gap-2 group">
-                <div class="w-16 h-16 rounded-2xl bg-[#C68E5F] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
-                    <i data-lucide="microscope" class="w-8 h-8"></i>
-                </div>
-                <span class="text-[10px] font-bold opacity-60">畜產轉譯</span>
-            </button>
-            <button onclick="openExpertiseModal(1)" class="flex flex-col items-center gap-2 group">
-                <div class="w-16 h-16 rounded-2xl bg-[#8A9A5B] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
-                    <i data-lucide="mic-2" class="w-8 h-8"></i>
-                </div>
-                <span class="text-[10px] font-bold opacity-60">食農講師</span>
-            </button>
-            <button onclick="openExpertiseModal(2)" class="flex flex-col items-center gap-2 group">
-                <div class="w-16 h-16 rounded-2xl bg-[#E29578] flex items-center justify-center shadow-md text-white active:scale-90 transition-transform shadow-white-bold">
-                    <i data-lucide="palette" class="w-8 h-8"></i>
-                </div>
-                <span class="text-[10px] font-bold opacity-60">視覺美學</span>
-            </button>
-        </div>
-    </section>
-
-    <!-- Expertise Modal -->
-    <div id="expertise-modal" class="md:hidden fixed inset-0 z-[200] flex items-center justify-center p-6 expertise-modal">
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeExpertiseModal()"></div>
-        <div id="modal-content" class="relative w-full max-w-sm p-8 rounded-[2.5rem] bg-white border border-[#F0EAE0] shadow-2xl transition-theme theme-bento-card">
-            <button onclick="closeExpertiseModal()" class="absolute top-6 right-6 opacity-40 hover:opacity-100">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <div id="modal-icon-box" class="mb-6 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg text-white shadow-white-bold"></div>
-            <h3 id="modal-title" class="text-xl font-black mb-4 tracking-tight bento-title"></h3>
-            <p id="modal-desc" class="leading-relaxed text-sm opacity-80 mb-6 bento-desc"></p>
-            <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[#C68E5F]">
-                <span id="modal-sub"></span> <i data-lucide="chevron-right" class="w-3 h-3"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. Portfolio Section -->
-    <section id="portfolio" class="py-16 md:py-24 overflow-hidden bg-[#2D1B10] transition-theme">
-        <div class="max-w-6xl mx-auto px-6 mb-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 text-center md:text-left">
-            <div>
-                <h2 class="text-3xl font-black text-[#F9F6F0] mb-2 italic tracking-tighter uppercase shadow-white-bold">Portfolio Showcase.</h2>
-                <p class="text-[#C68E5F] text-[11px] tracking-[0.3em] font-bold uppercase">滾動中的食農饗宴</p>
-            </div>
-            <button onclick="toggleMarquee()" class="flex items-center gap-3 text-[10px] font-bold text-white/70 border border-white/20 px-6 py-2 rounded-full hover:bg-white/10 transition">
-                <span id="marquee-btn-text" class="flex items-center gap-2 shadow-white-thin"><i data-lucide="pause" class="w-3 h-3"></i> PAUSE</span>
-            </button>
-        </div>
-        <div class="relative group">
-            <div id="marquee-track" class="animate-marquee flex gap-6 md:gap-8"></div>
-        </div>
-    </section>
-
-    <!-- 8. Contact Section -->
-    <section id="contact" class="py-16 md:py-24 px-4 md:px-6">
-    <div class="max-w-6xl mx-auto">
-        <div id="contact-card" class="rounded-[2.5rem] md:rounded-[4rem] overflow-hidden grid md:grid-cols-2 shadow-2xl bg-white border border-[#F0EAE0] transition-theme theme-card">
-            
-            <!-- 左側聯絡資訊 -->
-            <div class="p-8 md:p-16 space-y-8 text-center md:text-left">
-                <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter uppercase">Get in Touch.</h2>
-                <p class="text-base md:text-lg opacity-80 leading-relaxed px-2 md:px-0">
-                    正在尋找能將科學知識與視覺傳達完美結合轉譯的夥伴嗎？<br class="hidden md:block"/>
-                    我隨時準備好為您的食農專案注入新的生命力。
-                </p>
-                <div class="space-y-4">
-                    <button onclick="openContactPopup()" class="w-full text-left flex items-center gap-4 p-5 rounded-3xl bg-[#F9F6F0] border border-[#EAE2D5] theme-card-sub hover:scale-[1.02] transition-transform group">
-                        <div class="w-10 h-10 rounded-xl bg-[#C68E5F] text-white flex items-center justify-center shadow-md transition-transform group-hover:rotate-12">
-                            <i data-lucide="mail"></i>
-                        </div>
-                        <div>
-                            <div class="text-[9px] font-bold opacity-40 uppercase tracking-widest">Connect via Email</div>
-                            <div class="font-bold text-sm">foodagri.note01@gmail.com</div>
-                        </div>
-                    </button>
-                    <div class="flex gap-4">
-                        <a href="https://www.facebook.com/ftime.fae" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
-                            <i data-lucide="facebook" class="w-4 h-4 md:w-5 md:h-5 text-[#4267B2]"></i>
-                            <span class="text-xs font-bold">Facebook</span>
-                        </a>
-                        <a href="https://twfooducation.org/" target="_blank" class="flex-1 flex items-center justify-center gap-2 md:gap-4 p-4 md:p-5 rounded-[2rem] border border-[#F0EAE0] hover:bg-gray-50 transition theme-card-sub">
-                            <i data-lucide="globe" class="w-4 h-4 md:w-5 md:h-5 text-[#8A9A5B]"></i>
-                            <span class="text-xs font-bold">兒童食育協會</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 右側服務區塊：新增磨砂圓形互動 -->
-            <div class="p-8 md:p-16 flex flex-col justify-center bg-[#C68E5F] text-white relative overflow-hidden group/service">
-                
-                <!-- 💡 磨砂玻璃裝飾圓形 (背景層) -->
-                <!-- 大圓 -->
-                <div class="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-1000 ease-out group-hover/service:scale-110 group-hover/service:-translate-x-12 group-hover/service:-translate-y-12 z-0"></div>
-                <!-- 小圓 -->
-                <div class="absolute right-1/4 top-0 w-24 h-24 rounded-full bg-white/5 backdrop-blur-sm transition-all duration-700 delay-100 group-hover/service:scale-150 group-hover/service:translate-x-10 z-0"></div>
-
-                <!-- 內容層：需設定 z-10 確保在圓形上方 -->
-                <div class="relative z-10 mb-8 text-center md:text-left">
-                    <h3 class="text-[10px] font-bold tracking-[0.4em] uppercase opacity-70 mb-6 md:mb-8 shadow-white-thin">Service Menu</h3>
-                    <ul class="space-y-5 md:space-y-8">
-                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                            <span class="text-xs opacity-50 font-normal shadow-white-thin">01</span> 食農教育教案開發
-                        </li>
-                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                            <span class="text-xs opacity-50 font-normal shadow-white-thin">02</span> 畜產專業知識轉譯
-                        </li>
-                        <li class="flex items-center md:items-start gap-4 text-xl md:text-2xl font-black italic border-b border-white/10 pb-3 md:pb-4 shadow-white-bold">
-                            <span class="text-xs opacity-50 font-normal shadow-white-thin">03</span> 品牌視覺與插畫設計
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 邀課按鈕 -->
-                <a href="#" target="_blank" class="relative z-10 w-full py-5 bg-white text-[#C68E5F] rounded-2xl font-black tracking-widest text-center text-sm transition-all shadow-xl hover:scale-[1.02] hover:shadow-2xl active:scale-95 block">
-                    立即邀課合作
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-  
-  
-        <!-- 💡 原理學習：新聯絡彈窗結構 -->
-    <div id="contact-popup" class="fixed inset-0 z-[250] items-center justify-center p-6 glass-modal-overlay">
-        <div class="glass-modal-card w-full max-w-sm p-8 rounded-[2.5rem] relative text-center">
-            <button onclick="closeContactPopup()" class="absolute top-6 right-6 opacity-40 hover:opacity-100"><i data-lucide="x"></i></button>
-            
-            <div class="w-16 h-16 bg-[#C68E5F] text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+        <button onclick="openContactPopup()" class="w-full link-card flex items-center p-6 rounded-[2.5rem] shadow-sm hover:shadow-lg reveal delay-200">
+            <div class="w-14 h-14 icon-box rounded-2xl flex items-center justify-center mr-5 transition-colors duration-500">
                 <i data-lucide="mail" class="w-8 h-8"></i>
             </div>
-            
-            <h3 class="text-2xl font-black italic tracking-tighter uppercase mb-2">聯繫合作</h3>
-            <p class="text-sm opacity-60 mb-8">點擊下方 Email 自動複製地址</p>
-            
-            <!-- 複製區塊 -->
-            <div onclick="copyEmailToClipboard()" class="group relative cursor-pointer bg-white/50 dark:bg-white/10 p-5 rounded-2xl border border-[#EAE2D5] dark:border-white/10 hover:border-[#C68E5F] transition-all mb-4">
-                <span id="email-val" class="text-sm font-bold text-[#C68E5F]">foodagri.note01@gmail.com</span>
-                <div class="text-[9px] font-bold opacity-0 group-hover:opacity-100 transition-opacity mt-1 uppercase tracking-widest">點擊複製</div>
+            <div class="flex-1 text-left">
+                <h3 class="text-lg font-black">合作邀請與聯繫</h3>
+                <p class="text-[13px] font-bold opacity-60">歡迎講師邀約、教材設計委託</p>
             </div>
-            
-            <!-- 下載按鈕 -->
-            <button onclick="downloadContactVCF()" class="w-full py-4 bg-[#4A3728] text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:opacity-90 transition">
-                <i data-lucide="user-plus" class="w-4 h-4"></i> 儲存至通訊錄
+            <i data-lucide="chevron-right" class="opacity-30 w-6 h-6"></i>
+        </button>
+    </main>
+
+    <!-- 聯繫彈窗 -->
+    <div id="contact-popup" class="fixed inset-0 z-[250] items-center justify-center p-6 glass-modal-overlay">
+        <div class="glass-modal-card w-full max-w-sm p-10 rounded-[3.5rem] relative text-center shadow-2xl border border-white/10">
+            <button onclick="closeContactPopup()" class="absolute top-8 right-8 opacity-40 hover:opacity-100 transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="w-20 h-20 bg-[var(--primary)] text-white rounded-[2.5rem] flex items-center justify-center mx-auto mb-6 shadow-xl">
+                <i data-lucide="mail" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-2xl font-black tracking-tight mb-2">聯繫合作</h3>
+            <p class="text-sm font-bold opacity-50 mb-8">點擊下方 Email 自動複製</p>
+            <div onclick="copyEmailToClipboard()" class="group relative cursor-pointer bg-black/5 dark:bg-white/5 p-6 rounded-3xl border border-transparent hover:border-[var(--primary)] transition-all mb-8">
+                <span id="email-val" class="text-base font-black break-all" style="color: var(--primary);">foodagri.note01@gmail.com</span>
+                <div class="text-[10px] font-black opacity-40 group-hover:opacity-100 transition-opacity mt-2 uppercase tracking-widest">TAP TO COPY</div>
+            </div>
+            <button onclick="downloadContactVCF()" class="w-full py-5 text-white rounded-2xl font-black flex items-center justify-center gap-3 hover:opacity-90 transition shadow-lg" style="background-color: var(--primary);">
+                <i data-lucide="user-plus" class="w-5 h-5"></i> 儲存至通訊錄
             </button>
         </div>
     </div>
 
-    <!-- 💡 原理學習：複製成功提示容器 -->
     <div id="toast-container" class="fixed bottom-12 left-1/2 -translate-x-1/2 z-[300]"></div>
 
-    <!-- 9. Footer -->
-    <footer class="py-12 border-t border-[#F0EAE0] px-6 text-center transition-theme">
-        <div class="max-w-6xl mx-auto">
-            <div class="mb-8 flex flex-col items-center">
-                <div class="w-10 h-10 rounded-xl bg-[#C68E5F]/10 flex items-center justify-center text-[#C68E5F] mb-6">
-                    <i data-lucide="sparkles"></i>
-                </div>
-                <p class="text-sm font-bold tracking-[0.15em] md:tracking-[0.2em] opacity-60 italic max-w-lg mx-auto leading-relaxed px-4">
-                    " 在碎片時間中累積的溫度，最終將匯聚成改變土地的力量。"
-                </p>
-            </div>
-            <div class="pt-8 border-t border-dashed border-[#C68E5F]/20 flex flex-col md:flex-row justify-center items-center gap-6 text-[9px] md:text-[10px] font-bold tracking-[0.3em] opacity-40 uppercase">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="copyright" class="w-3 h-3"></i> 2026 HU HIANG-LING. ALL RIGHTS RESERVED.
-                </div>
-                <div class="flex gap-4">
-                    <a href="#" class="hover:underline">Privacy Policy</a>
-                    <a href="#" class="hover:underline">Terms of Service</a>
-                </div>
-            </div>
+    <footer class="mt-20 text-center px-6 reveal delay-500">
+        <div class="inline-flex items-center gap-2 px-6 py-2 rounded-full mb-6 border shadow-sm transition-colors duration-500" style="background-color: var(--icon-bg); color: var(--primary); border-color: var(--border);">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>網站持續改版中｜VER 2026.02</span>
         </div>
+        <p class="text-[11px] font-bold tracking-widest uppercase mb-10 opacity-40">© 2026 Time Food Education｜胡湘苓 版權所有</p>
     </footer>
 
     <script>
-
- lucide.createIcons();
-
-        const cursor = document.getElementById('custom-cursor');
-        const stars = ['★', '☆', '✧', '✦'];
-        let lastX = 0;
-        let lastY = 0;
-
-        if (window.matchMedia("(pointer: fine)").matches) {
-            document.addEventListener('mousemove', (e) => {
-                if (cursor) {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                }
-
-                // 偵測滑鼠下方的元素
-                const target = document.elementFromPoint(e.clientX, e.clientY);
-                
-                // 這裡就是魔法所在：它會自動向上尋找是否屬於這些「點擊元素」
-                const isHoveringPointer = target && target.closest('.glass-card, button, a, [role="button"], input, label, .clickable-item');
-                
-                if (isHoveringPointer) {
-                    cursor.classList.add('is-hidden');
-                } else {
-                    cursor.classList.remove('is-hidden');
-                }
-
-                const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-                if (dist > 25 && !isHoveringPointer) { 
-                    createStar(e.clientX, e.clientY);
-                    lastX = e.clientX;
-                    lastY = e.clientY;
-                }
-            });
-
-            document.addEventListener('mousedown', () => {
-                if (cursor && !cursor.classList.contains('is-hidden')) {
-                    cursor.classList.add('cursor-clicking');
-                }
-            });
-            document.addEventListener('mouseup', () => {
-                if (cursor) cursor.classList.remove('cursor-clicking');
-            });
-        } else {
-            if (cursor) cursor.style.display = 'none';
-            document.body.style.cursor = 'auto';
-        }
-
-        function createStar(x, y) {
-            const star = document.createElement('div');
-            star.className = 'star-particle';
-            star.innerText = stars[Math.floor(Math.random() * stars.length)];
-            star.style.left = x + 'px';
-            star.style.top = y + 'px';
-            const size = Math.random() * 8 + 8;
-            star.style.fontSize = size + 'px';
-            star.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1000);
-        }
-
         lucide.createIcons();
 
-        let darkMode = false;
-        let autoEyeCare = true;
-        let isPaused = false;
-        let isMenuOpen = false;
-
-        let lastScrollY = window.scrollY;
-        const eyecareBar = document.getElementById('eyecare-bar');
-        const navbar = document.getElementById('navbar');
-
-        function getEyecareHeight() {
-            return eyecareBar.offsetHeight || 27;
-        }
-
-        function initNavPosition() {
-            navbar.style.top = getEyecareHeight() + 'px';
-        }
-
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            const eyecareHeight = getEyecareHeight();
-            
-            if (currentScrollY > lastScrollY && currentScrollY > 50) {
-                eyecareBar.classList.add('eyecare-hidden');
-                navbar.style.top = '0px';
-            } else {
-                eyecareBar.classList.remove('eyecare-hidden');
-                navbar.style.top = eyecareHeight + 'px';
-            }
-            lastScrollY = currentScrollY;
-        });
-
-        const expertiseData = [
-            {
-                title: "主食：畜產轉譯",
-                desc: "中興動科背景，將嚴謹的科學數據，轉化為大眾餐桌上聽得懂、有溫度的語言。",
-                sub: "Livestock Science Translation",
-                icon: "microscope",
-                color: "#C68E5F"
-            },
-            {
-                title: "主菜：食農講師",
-                desc: "致力於食農素養教育，在全台各地播下食農種子，連結消費者與生產者的斷層。",
-                sub: "Food and Agriculture Educator",
-                icon: "mic-2",
-                color: "#8A9A5B"
-            },
-            {
-                title: "配菜：視覺美學",
-                desc: "擅長將繁複資訊圖像化，用細膩的手繪感插畫，為農產品牌注入獨特靈魂。",
-                sub: "Visual Storytelling",
-                icon: "palette",
-                color: "#E29578"
-            }
-        ];
-
-        const galleryItems = [
-            { title: "咕咕大探險", cat: "教材設計", img: "https://lh3.googleusercontent.com/d/1KqBjyj_xnJLjgCn0K_P0Un7PhzgGwymO", desc: "一本教學手冊可供全年齡透過簡單閱讀，了解國產雞蛋雞肉從生產到餐桌！【可免費索取咕咕大探險教材資源包】", url: "https://forms.gle/CXpQeto81sWwXLqc9" },
-            { title: "優豬可尋", cat: "知識轉譯", img: "＃", desc: "將複雜的畜牧養殖過程，透過圖文懶人包形式呈獻。", url: "#" },
-            { title: "豆渣循環利用", cat: "食育課程", img: "＃", desc: "一本教學手冊可供全年齡透過簡單閱讀，了解國產雞蛋雞肉從生產到餐桌！【點擊免費索取咕咕大探險教材資源包】", url: "#" },
-            { title: "易福惜食教育簡報", cat: "專案經理", img: "https://lh3.googleusercontent.com/d/1BYV97lOS1R743XBBvce2-HwXrHK835pN", desc: "編輯調整故事脈絡與排版，授權供營養師及老師們，搭配 eFOOOD 惜食教育桌遊「我吃完了」進行惜食教育推廣！", url: "https://www.foodchill.tw/project/imdoneeating" },
-            { title: "農場美學插畫", cat: "視覺設計", img: "＃", desc: "這是一本可供全年齡簡單閱讀了解國產雞蛋雞肉來由的手冊！從生產到餐桌，國小生都能讀大人一定也可以！【點擊索取咕咕大探險教材資源包】", url: "#" },
-            { title: "食通信專刊", cat: "編輯推進", img: "＃", desc: "深入產地採訪生產者，將硬核技術轉化為感人故事。", url: "#" }
-        ];
-
-        /* --- 藝廊渲染與滾動感應修正 --- */
-        function renderGallery() {
-            const track = document.getElementById('marquee-track');
-            const doubleItems = [...galleryItems, ...galleryItems];
-            track.innerHTML = doubleItems.map((item, index) => `
-                <a href="${item.url}" class="group/card gallery-item-trigger relative w-[280px] md:w-[420px] aspect-[4/5] md:aspect-[16/10] rounded-[2.5rem] bg-[#3D2B1F] overflow-hidden flex-shrink-0 cursor-pointer border border-white/5">
-                    <img src="${item.img}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110 opacity-70" />
-                    <!-- 半透明漸層遮罩層 -->
-                    <div class="gallery-card-overlay"></div>
-                    <!-- 文字內容層 -->
-                    <div class="gallery-card-content absolute inset-0 flex flex-col justify-end p-8 md:p-10">
-                        <span class="self-start px-3 py-1 rounded-full text-[9px] font-bold bg-[#C68E5F] text-white mb-4 shadow-white-thin">${item.cat}</span>
-                        <h4 class="text-xl md:text-2xl font-bold text-[#F9F6F0] mb-3 shadow-white-bold">${item.title}</h4>
-                        <p class="text-[#EAD7C3]/90 text-xs leading-relaxed line-clamp-3 mb-6 shadow-white-thin">${item.desc}</p>
-                        <div class="flex items-center gap-2 text-[#C68E5F] text-[10px] font-bold tracking-widest shadow-white-thin">EXPLORE CASE <i data-lucide="chevron-right" class="w-3 h-3"></i></div>
-                    </div>
-                </a>
-            `).join('');
-            
-            lucide.createIcons();
-            initIntersectionObserver();
-        }
-
-        /* --- 手機版滾動感應啟動 --- */
-        function initIntersectionObserver() {
-            const options = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.7 
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (window.innerWidth < 1024) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                        } else {
-                            entry.target.classList.remove('is-visible');
-                        }
-                    }
-                });
-            }, options);
-
-            document.querySelectorAll('.gallery-item-trigger').forEach(card => {
-                observer.observe(card);
-            });
-        }
-
-        renderGallery();
-
-        function toggleMarquee() {
-            isPaused = !isPaused;
-            const track = document.getElementById('marquee-track');
-            const btnText = document.getElementById('marquee-btn-text');
-            if (isPaused) {
-                track.classList.add('pause-animation');
-                btnText.innerHTML = '<i data-lucide="play" class="w-3 h-3"></i> RESUME';
-            } else {
-                track.classList.remove('pause-animation');
-                btnText.innerHTML = '<i data-lucide="pause" class="w-3 h-3"></i> PAUSE';
-            }
-            lucide.createIcons();
-        }
-
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('menu-overlay');
-            const icon = document.getElementById('menu-icon-trigger');
-            const isOpening = menu.classList.contains('translate-x-full');
-            if (isOpening) {
-                menu.classList.remove('translate-x-full');
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
-                icon.setAttribute('data-lucide', 'x');
-                document.body.classList.add('overflow-hidden');
-            } else {
-                menu.classList.add('translate-x-full');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-                icon.setAttribute('data-lucide', 'menu');
-                document.body.classList.remove('overflow-hidden');
-            }
-            lucide.createIcons();
-        }
-
-        function openExpertiseModal(index) {
-            const data = expertiseData[index];
-            const modal = document.getElementById('expertise-modal');
-            const iconBox = document.getElementById('modal-icon-box');
-            document.getElementById('modal-title').innerText = data.title;
-            document.getElementById('modal-desc').innerText = data.desc;
-            document.getElementById('modal-sub').innerText = data.sub;
-            iconBox.style.backgroundColor = data.color;
-            iconBox.innerHTML = `<i data-lucide="${data.icon}" class="w-8 h-8"></i>`;
-            modal.classList.add('active');
-            lucide.createIcons();
-        }
-
-        function closeExpertiseModal() {
-            document.getElementById('expertise-modal').classList.remove('active');
-        }
-
-        function toggleDarkMode() {
-            darkMode = !darkMode;
-            autoEyeCare = false;
-            applyTheme();
-        }
-
-        function toggleAuto() {
-            autoEyeCare = !autoEyeCare;
-            if(autoEyeCare) checkAutoTime();
-            updateUI();
-        }
-
-        function checkAutoTime() {
-            if(!autoEyeCare) return;
-            const hour = new Date().getHours();
-            darkMode = (hour >= 18 || hour < 6);
-            applyTheme();
-        }
-
-        function applyTheme() {
+        function setTheme(theme, btn) {
             const root = document.getElementById('body-root');
-            const icon = document.getElementById('theme-icon');
-            if(darkMode) {
-                root.classList.add('dark-mode');
-                icon.setAttribute('data-lucide', 'sun');
+            root.classList.remove('theme-ocean-morning', 'theme-noon', 'theme-sunset-sea', 'theme-mountain-forest', 'theme-midnight');
+            
+            document.querySelectorAll('.theme-btn').forEach(b => {
+                b.classList.remove('active-btn', 'bg-[#B2BD7E]', 'bg-[#4A90E2]', 'bg-[#D4A373]', 'bg-[#F4A261]', 'bg-[#131811]', 'bg-[#A29BFE]', 'text-white');
+            });
+
+            btn.classList.add('active-btn', 'text-white');
+            
+            if(theme === 'default') {
+                btn.classList.add('bg-[#B2BD7E]');
             } else {
-                root.classList.remove('dark-mode');
-                icon.setAttribute('data-lucide', 'moon');
+                root.classList.add(`theme-${theme}`);
+                const colors = {
+                    'ocean-morning': '#4A90E2',
+                    'noon': '#D4A373',
+                    'sunset-sea': '#F4A261',
+                    'mountain-forest': '#131811',
+                    'midnight': '#A29BFE'
+                };
+                btn.classList.add(`bg-[${colors[theme]}]`);
             }
             lucide.createIcons();
-            updateUI();
         }
 
-        function updateUI() {
-            const status = document.getElementById('eyecare-status');
-            const autoBtn = document.getElementById('auto-btn');
-            status.innerText = darkMode ? "Night-Comfort Mode Active" : "Eye-Care Mode Active";
-            autoBtn.style.opacity = autoEyeCare ? "1" : "0.3";
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 💡 原理學習：升級版聯絡功能 JS 邏輯
-        const contactPopup = document.getElementById('contact-popup');
-        const emailToCopy = "foodagri.note01@gmail.com";
-
-        // 6. 彈窗顯示控制
         function openContactPopup() {
-            contactPopup.classList.add('active');
+            document.getElementById('contact-popup').classList.add('active');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
         }
 
         function closeContactPopup() {
-            contactPopup.classList.remove('active');
+            document.getElementById('contact-popup').classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        // 點擊背景遮罩關閉
-        contactPopup.addEventListener('click', (e) => {
-            if(e.target === contactPopup) closeContactPopup();
+        document.getElementById('contact-popup').addEventListener('click', (e) => {
+            if(e.target === document.getElementById('contact-popup')) closeContactPopup();
         });
 
-        // 7. 💡 複製 Email 原理：使用暫時性 Input 選取並執行 Copy 指令
         function copyEmailToClipboard() {
             const el = document.createElement('textarea');
-            el.value = emailToCopy;
+            el.value = "foodagri.note01@gmail.com";
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
 
-            // 觸發提示
             const toast = document.createElement('div');
-            toast.className = "copy-toast fixed bottom-12 left-1/2 bg-[#4A3728] text-white px-6 py-3 rounded-full shadow-2xl text-[10px] font-bold tracking-widest z-[300]";
-            toast.innerText = "COPIED TO CLIPBOARD";
+            toast.className = "copy-toast fixed bottom-12 left-1/2 -translate-x-1/2 px-8 py-4 rounded-full shadow-2xl text-[11px] font-black tracking-widest z-[300]";
+            toast.style.backgroundColor = "var(--primary)";
+            toast.style.color = "white";
+            toast.innerText = "COPIED TO CLIPBOARD!";
             document.getElementById('toast-container').appendChild(toast);
             setTimeout(() => toast.remove(), 2000);
         }
 
-        // 8. 💡 下載 VCF 原理：動態生成符合通訊錄規範的 Blob 物件並下載
         function downloadContactVCF() {
-            // vCard 標準格式字串
-            const vCardData = `BEGIN:VCARD
-VERSION:3.0
-FN:食刻食農｜胡湘苓
-ORG:食刻食農
-TITLE:創辦人
-EMAIL;TYPE=INTERNET:foodagri.note01@gmail.com
-URL:https://www.facebook.com/ftime.fae
-NOTE:中興動科背景，食農溝通與視覺轉譯設計師。
-END:VCARD`;
-
-            // 1. 將字串封裝成 Blob 二進位物件
+            const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:食刻食農｜胡湘苓\nORG:食刻食農\nTITLE:創辦人\nEMAIL;TYPE=INTERNET:foodagri.note01@gmail.com\nEND:VCARD`;
             const blob = new Blob([vCardData], { type: 'text/vcard' });
-            
-            // 2. 建立一個瀏覽器內部的暫時指向 URL
             const url = window.URL.createObjectURL(blob);
-            
-            // 3. 建立虛擬 A 標籤進行點擊下載
             const link = document.createElement('a');
             link.href = url;
-            link.download = "胡湘苓_食刻食農_聯絡資訊.vcf";
+            link.download = "胡湘苓_食刻食農.vcf";
             document.body.appendChild(link);
             link.click();
-            
-            // 4. 【關鍵點】清理資源：從 DOM 移除並釋放 URL 佔用的記憶體
             document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
         }
-
-
-        window.onload = function() {
-            initNavPosition();
-            checkAutoTime();
-        };
-        setInterval(checkAutoTime, 60000);
     </script>
 </body>
 </html>
-
-
